@@ -239,7 +239,7 @@
             <td>${pct(er)}</td>
             <td>${pct(t.growth)}</td>
             <td>${statusChip(t.growth)}</td>
-            <td><span class="link" onclick="showDetails('${t.title}')">تفاصيل</span></td>
+<td><span class="link" data-title="${t.title}" onclick="openModal(this)">تفاصيل</span></td>
           </tr>
         `;
       }).join("");
@@ -249,7 +249,46 @@
       `;
     }
 
-    function showDetails(title){
+    function openModal(el){
+  const title = el.getAttribute("data-title");
+  const t = MOCK.find(x=>x.title===title);
+  if(!t) return;
+
+  const er = computeER(t);
+  const interactions = t.likes + t.comments + t.shares;
+
+  document.getElementById("md_title").textContent = t.title;
+  document.getElementById("md_sub").textContent =
+    `Likes: ${fmt(t.likes)} • Comments: ${fmt(t.comments)} • Shares: ${fmt(t.shares)} • Total: ${fmt(interactions)}`;
+
+  document.getElementById("md_views").textContent = fmt(t.views);
+  document.getElementById("md_er").textContent = pct(er);
+  document.getElementById("md_growth").textContent = pct(t.growth);
+
+  // Rules بسيطة تعطي أسباب “منطقية”
+  const reasons = [];
+  if (t.growth >= 50) reasons.push("🚀 نمو سريع: الترند قاعد ينتشر بسرعة (Growth عالي).");
+  if (er >= 8) reasons.push("🔥 تفاعل قوي: الناس تتفاعل وتشارك (ER عالي).");
+  if (t.shares >= 8000) reasons.push("🔁 قابلية مشاركة عالية: المشاركات مرتفعة وهذا يرفع الانتشار.");
+  if (t.comments >= 4000) reasons.push("💬 نقاش واضح: التعليقات كثيرة → خوارزميات المنصات تحب الحوار.");
+  if (t.views >= 1200000) reasons.push("👀 وصول واسع: المشاهدات كبيرة → صار “عام” مو محدود.");
+
+  if (!reasons.length) reasons.push("🧪 مؤشرات هادئة: يحتاج تحسين (عنوان/هاشتاق/وقت نشر/Hook).");
+
+  document.getElementById("md_reasons").innerHTML = reasons.map(x=>`<div>${x}</div>`).join("");
+
+  document.getElementById("modalBackdrop").style.display = "block";
+}
+
+function closeModal(){
+  document.getElementById("modalBackdrop").style.display = "none";
+}
+
+// إغلاق عند الضغط خارج المودال
+document.getElementById("modalBackdrop").addEventListener("click", (e)=>{
+  if (e.target.id === "modalBackdrop") closeModal();
+});
+
       const t = MOCK.find(x=>x.title===title);
       if(!t) return;
       const er = computeER(t);
@@ -280,5 +319,40 @@
 
     render();
   </script>
+<!-- Modal -->
+<div id="modalBackdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(4px); z-index:9999; padding:20px;">
+  <div style="max-width:720px; margin:6vh auto; border:1px solid rgba(255,255,255,.10); background:rgba(18,26,51,.95); border-radius:18px; overflow:hidden;">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.10);">
+      <div>
+        <b id="md_title" style="font-size:16px;">—</b>
+        <div id="md_sub" style="color:rgba(232,237,255,.65); font-size:13px; margin-top:4px;">—</div>
+      </div>
+      <button class="btn" onclick="closeModal()">إغلاق</button>
+    </div>
+
+    <div style="padding:14px 16px; display:grid; grid-template-columns:repeat(12,1fr); gap:10px;">
+      <div class="card" style="grid-column:span 4; margin:0;">
+        <h3>المشاهدات</h3>
+        <div class="metric" id="md_views">—</div>
+      </div>
+      <div class="card" style="grid-column:span 4; margin:0;">
+        <h3>التفاعل</h3>
+        <div class="metric" id="md_er">—</div>
+      </div>
+      <div class="card" style="grid-column:span 4; margin:0;">
+        <h3>النمو</h3>
+        <div class="metric" id="md_growth">—</div>
+      </div>
+
+      <div class="panel" style="grid-column:span 12;">
+        <div class="panelTop">
+          <b>ليش ممكن ينتشر؟</b>
+          <span>نقاط تجريبية (Rules)</span>
+        </div>
+        <div style="padding:12px 16px; color:rgba(232,237,255,.9); line-height:1.8" id="md_reasons">—</div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
