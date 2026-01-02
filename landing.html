@@ -15,7 +15,7 @@
       --card:#121a33;
       --muted:#9aa4c0;
       --text:#e8edff;
-      --line:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.10);
       --accent:#6aa7ff;
       --good:#35d07f;
     }
@@ -54,11 +54,10 @@
       color:var(--muted);
       font-size:18px;
       line-height:1.8;
-      margin-bottom:26px;
+      margin-bottom:22px;
     }
-    .cta{
-      display:flex;gap:14px;flex-wrap:wrap
-    }
+
+    .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
     .btn{
       padding:14px 18px;
       border-radius:16px;
@@ -67,11 +66,27 @@
       border:1px solid var(--line);
       background:rgba(255,255,255,.06);
       color:var(--text);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
     .btn.primary{
       background:rgba(106,167,255,.22);
       border-color:rgba(106,167,255,.45);
     }
+
+    .input{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      min-width:240px;
+      outline:none;
+    }
+    .input::placeholder{color:rgba(232,237,255,.55)}
 
     .card{
       border:1px solid var(--line);
@@ -87,6 +102,13 @@
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:16px;
+    }
+
+    .note{
+      margin-top:10px;
+      color:rgba(232,237,255,.70);
+      font-size:13px;
+      line-height:1.7;
     }
 
     footer{
@@ -120,15 +142,21 @@
 
         <p>
           Virlo يساعد صناع المحتوى والمسوقين يفهمون
-          <b>ليش هذا المقطع انتشر</b>،
-          ووش المؤشرات اللي خلت الخوارزميات تدفعه.
-          بدون تعقيد… أرقام واضحة وقرارات أسرع.
+          <b>ليش هذا الترند انتشر</b>،
+          ويعطيك مؤشرات واضحة مثل <b>النمو</b> و<b>التفاعل</b>.
+          بدون تعقيد… قرارات أسرع.
         </p>
 
         <div class="cta">
           <a href="dashboard.html" class="btn primary">جرّب الديمو</a>
-          <button class="btn" onclick="alert('قريبًا 🚀')">انضم للقائمة</button>
+
+          <form id="emailForm" onsubmit="saveEmail(event)" style="display:flex; gap:10px; flex-wrap:wrap">
+            <input id="email" class="input" type="email" required placeholder="اكتب إيميلك للتحديثات" />
+            <button class="btn primary" type="submit">انضم</button>
+          </form>
         </div>
+
+        <div class="note" id="emailMsg" style="display:none"></div>
       </div>
 
       <div class="card">
@@ -161,5 +189,24 @@
       © Virlo — MVP تجريبي
     </footer>
   </div>
+
+  <script>
+    function saveEmail(e){
+      e.preventDefault();
+      const el = document.getElementById("email");
+      const msg = document.getElementById("emailMsg");
+      const email = (el.value || "").trim().toLowerCase();
+
+      // حفظ بسيط (مؤقت) داخل المتصفح
+      const key = "virlo_waitlist_emails";
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      if (!list.includes(email)) list.push(email);
+      localStorage.setItem(key, JSON.stringify(list));
+
+      msg.style.display = "block";
+      msg.textContent = "تم تسجيل إيميلك ✅ (نسخة MVP).";
+      el.value = "";
+    }
+  </script>
 </body>
 </html>
