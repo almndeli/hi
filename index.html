@@ -1,11 +1,212 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <title>Privacy Policy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virlo — افهم الترند قبل ما يفوتك</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a33;
+      --muted:#9aa4c0;
+      --text:#e8edff;
+      --line:rgba(255,255,255,.10);
+      --accent:#6aa7ff;
+      --good:#35d07f;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Tajawal", system-ui;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(106,167,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 0% 0%, rgba(53,208,127,.18), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      border:1px solid var(--line);
+      background:rgba(18,26,51,.65);
+      padding:14px 18px;border-radius:18px;
+    }
+    header b{font-size:18px}
+    header span{color:var(--muted);font-size:13px}
+
+    .hero{
+      margin-top:40px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:center;
+    }
+    .hero h1{
+      font-size:40px;
+      line-height:1.2;
+      margin:0 0 16px 0;
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.8;
+      margin-bottom:22px;
+    }
+
+    .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{
+      padding:14px 18px;
+      border-radius:16px;
+      font-size:15px;
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .btn.primary{
+      background:rgba(106,167,255,.22);
+      border-color:rgba(106,167,255,.45);
+    }
+
+    .input{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      min-width:240px;
+      outline:none;
+    }
+    .input::placeholder{color:rgba(232,237,255,.55)}
+
+    .card{
+      border:1px solid var(--line);
+      background:rgba(18,26,51,.65);
+      border-radius:20px;
+      padding:18px;
+    }
+    .card h3{margin:0 0 8px 0}
+    .card p{margin:0;color:var(--muted);line-height:1.7}
+
+    .grid{
+      margin-top:60px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .note{
+      margin-top:10px;
+      color:rgba(232,237,255,.70);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    footer{
+      margin-top:70px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .hero h1{font-size:32px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Privacy Policy</h1>
-  <p>This website does not collect or store personal user data.</p>
-  <p>All information displayed is based on publicly available TikTok content.</p>
+  <div class="wrap">
+    <header>
+      <b>Virlo</b>
+      <span>افهم الترند قبل ما يفوتك</span>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>
+          الترند ما ينتشر صدفة<br>
+          <span style="color:var(--accent)">Virlo يشرح لك ليش</span>
+        </h1>
+
+        <p>
+          Virlo يساعد صناع المحتوى والمسوقين يفهمون
+          <b>ليش هذا الترند انتشر</b>،
+          ويعطيك مؤشرات واضحة مثل <b>النمو</b> و<b>التفاعل</b>.
+          بدون تعقيد… قرارات أسرع.
+        </p>
+
+        <div class="cta">
+          <a href="dashboard.html" class="btn primary">جرّب الديمو</a>
+
+          <form id="emailForm" onsubmit="saveEmail(event)" style="display:flex; gap:10px; flex-wrap:wrap">
+            <input id="email" class="input" type="email" required placeholder="اكتب إيميلك للتحديثات" />
+            <button class="btn primary" type="submit">انضم</button>
+          </form>
+        </div>
+
+        <div class="note" id="emailMsg" style="display:none"></div>
+      </div>
+
+      <div class="card">
+        <h3>وش يسوي Virlo؟</h3>
+        <p>
+          • يحلل الترندات المنتشرة<br>
+          • يقيس التفاعل والنمو<br>
+          • يشرح أسباب الانتشار<br>
+          • يساعدك تختار المحتوى الصح بالوقت الصح
+        </p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>لصناع المحتوى</h3>
+        <p>اعرف وش تصور قبل لا تضيع وقتك على فكرة ما تنتشر.</p>
+      </div>
+      <div class="card">
+        <h3>للمسوقين</h3>
+        <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
+      </div>
+      <div class="card">
+        <h3>للعلامات التجارية</h3>
+        <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
+      </div>
+    </section>
+
+    <footer>
+      © Virlo — MVP تجريبي
+    </footer>
+  </div>
+
+  <script>
+    function saveEmail(e){
+      e.preventDefault();
+      const el = document.getElementById("email");
+      const msg = document.getElementById("emailMsg");
+      const email = (el.value || "").trim().toLowerCase();
+
+      // حفظ بسيط (مؤقت) داخل المتصفح
+      const key = "virlo_waitlist_emails";
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      if (!list.includes(email)) list.push(email);
+      localStorage.setItem(key, JSON.stringify(list));
+
+      msg.style.display = "block";
+      msg.textContent = "تم تسجيل إيميلك ✅ (نسخة MVP).";
+      el.value = "";
+    }
+  </script>
 </body>
 </html>
