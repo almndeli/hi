@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virlo - Dashboard (MVP)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a33;
+      --muted:#9aa4c0;
+      --text:#e8edff;
+      --line:rgba(255,255,255,.08);
+      --chip:rgba(255,255,255,.10);
+      --good:#35d07f;
+      --warn:#ffcc66;
+      --bad:#ff6b6b;
+      --accent:#6aa7ff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(106,167,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 0% 0%, rgba(53,208,127,.18), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    header{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      border:1px solid var(--line); background:rgba(18,26,51,.65); backdrop-filter: blur(10px);
+      padding:14px 16px;border-radius:18px;
+    }
+    .brand{display:flex;flex-direction:column;gap:2px}
+    .brand b{font-size:18px}
+    .brand span{color:var(--muted);font-size:13px}
+
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .input, select{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+      min-width: 160px;
+    }
+    .input::placeholder{color:rgba(232,237,255,.55)}
+    .btn{
+      background:rgba(106,167,255,.18);
+      border:1px solid rgba(106,167,255,.35);
+      color:var(--text);
+      padding:10px 12px;border-radius:14px;
+      cursor:pointer;
+    }
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:14px}
+    .card{
+      grid-column: span 4;
+      border:1px solid var(--line);
+      background:rgba(18,26,51,.65);
+      border-radius:18px;
+      padding:14px;
+      min-height:92px;
+    }
+    .card h3{margin:0 0 6px 0;font-size:14px;color:var(--muted);font-weight:500}
+    .metric{font-size:26px;font-weight:700;letter-spacing:.2px}
+    .sub{margin-top:6px;color:var(--muted);font-size:13px}
+
+    .panel{
+      grid-column: span 12;
+      border:1px solid var(--line);
+      background:rgba(18,26,51,.65);
+      border-radius:18px;
+      overflow:hidden;
+    }
+    .panelTop{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 16px;border-bottom:1px solid var(--line);
+    }
+    .panelTop b{font-size:15px}
+    .panelTop span{color:var(--muted);font-size:13px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:right}
+    th{color:var(--muted);font-weight:500;font-size:13px}
+    td{font-size:14px}
+    tr:hover{background:rgba(255,255,255,.04)}
+    .chip{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--line);
+      font-size:12px;color:var(--text);
+    }
+    .dot{width:8px;height:8px;border-radius:999px;display:inline-block}
+    .good{background:var(--good)}
+    .warn{background:var(--warn)}
+    .bad{background:var(--bad)}
+    .link{color:var(--accent);text-decoration:underline;cursor:pointer}
+
+    @media (max-width:900px){
+      .card{grid-column: span 6}
+    }
+    @media (max-width:600px){
+      header{flex-direction:column;align-items:stretch}
+      .controls{justify-content:space-between}
+      .card{grid-column: span 12}
+      th:nth-child(3), td:nth-child(3){display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <b>Virlo (MVP)</b>
+        <span>Dashboard تجريبي — بدون API (إلى أن تتم موافقة TikTok)</span>
+      </div>
+
+      <div class="controls">
+        <input id="q" class="input" placeholder="ابحث عن هاشتاق/عنوان…" />
+        <select id="range">
+          <option value="24h">آخر 24 ساعة</option>
+          <option value="7d" selected>آخر 7 أيام</option>
+          <option value="30d">آخر 30 يوم</option>
+        </select>
+        <select id="sort">
+          <option value="views" selected>ترتيب: المشاهدات</option>
+          <option value="engagement">ترتيب: التفاعل</option>
+          <option value="growth">ترتيب: النمو</option>
+        </select>
+        <button class="btn" id="reset">إعادة</button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h3>عدد الترندات (تجريبي)</h3>
+        <div class="metric" id="m_trends">—</div>
+        <div class="sub">حسب الفترة المحددة</div>
+      </div>
+      <div class="card">
+        <h3>إجمالي المشاهدات</h3>
+        <div class="metric" id="m_views">—</div>
+        <div class="sub">مجموع مشاهدات الترندات المعروضة</div>
+      </div>
+      <div class="card">
+        <h3>متوسط التفاعل</h3>
+        <div class="metric" id="m_er">—</div>
+        <div class="sub">تجريبي (Likes+Comments+Shares ÷ Views)</div>
+      </div>
+
+      <div class="panel">
+        <div class="panelTop">
+          <div>
+            <b>قائمة الترندات</b>
+            <span id="countNote">—</span>
+          </div>
+          <span>اضغط على “تفاصيل” لأي ترند</span>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>الترند</th>
+              <th>المشاهدات</th>
+              <th>التفاعل</th>
+              <th>النمو</th>
+              <th>الحالة</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // بيانات تجريبية (نستبدلها لاحقاً بـ TikTok API)
+    const MOCK = [
+      { title:"#شتاء_جدة", views: 1284000, likes: 102000, comments: 5400, shares: 8900, growth: 62 },
+      { title:"#قهوة_الصباح", views: 845000,  likes: 74000,  comments: 3200, shares: 6100, growth: 41 },
+      { title:"#مقاطع_سريعة", views: 1620000, likes: 98000,  comments: 6100, shares: 12000,growth: 58 },
+      { title:"#تحدي_ضحك",   views: 690000,  likes: 51000,  comments: 2800, shares: 4300, growth: 33 },
+      { title:"#اكسبلور",     views: 420000,  likes: 37000,  comments: 1900, shares: 2100, growth: 19 },
+      { title:"#رياضة",       views: 980000,  likes: 86000,  comments: 4500, shares: 7400, growth: 47 },
+    ];
+
+    const fmt = (n) => Intl.NumberFormat("ar-SA").format(n);
+    const pct = (n) => Intl.NumberFormat("ar-SA", {maximumFractionDigits:1}).format(n) + "%";
+
+    function computeER(t){
+      const interactions = t.likes + t.comments + t.shares;
+      return t.views ? (interactions / t.views) * 100 : 0;
+    }
+
+    function statusChip(g){
+      if (g >= 50) return `<span class="chip"><span class="dot good"></span>قوي</span>`;
+      if (g >= 25) return `<span class="chip"><span class="dot warn"></span>متوسط</span>`;
+      return `<span class="chip"><span class="dot bad"></span>ضعيف</span>`;
+    }
+
+    function render(){
+      const q = document.getElementById("q").value.trim();
+      const sort = document.getElementById("sort").value;
+
+      let data = MOCK.slice();
+      if (q) data = data.filter(x => x.title.includes(q));
+
+      data.sort((a,b)=>{
+        if (sort === "views") return b.views - a.views;
+        if (sort === "growth") return b.growth - a.growth;
+        // engagement
+        return computeER(b) - computeER(a);
+      });
+
+      // metrics
+      document.getElementById("m_trends").textContent = fmt(data.length);
+      const totalViews = data.reduce((s,x)=>s+x.views,0);
+      document.getElementById("m_views").textContent = fmt(totalViews);
+
+      const avgER = data.length ? data.reduce((s,x)=>s+computeER(x),0)/data.length : 0;
+      document.getElementById("m_er").textContent = pct(avgER);
+
+      document.getElementById("countNote").textContent = `(${fmt(data.length)} ترند)`;
+
+      const rows = data.map(t=>{
+        const er = computeER(t);
+        return `
+          <tr>
+            <td>${t.title}</td>
+            <td>${fmt(t.views)}</td>
+            <td>${pct(er)}</td>
+            <td>${pct(t.growth)}</td>
+            <td>${statusChip(t.growth)}</td>
+            <td><span class="link" onclick="showDetails('${t.title}')">تفاصيل</span></td>
+          </tr>
+        `;
+      }).join("");
+
+      document.getElementById("rows").innerHTML = rows || `
+        <tr><td colspan="6" style="color:rgba(232,237,255,.7)">ما فيه نتائج للبحث الحالي.</td></tr>
+      `;
+    }
+
+    function showDetails(title){
+      const t = MOCK.find(x=>x.title===title);
+      if(!t) return;
+      const er = computeER(t);
+
+      alert(
+        `تفاصيل الترند: ${t.title}\n\n` +
+        `المشاهدات: ${fmt(t.views)}\n` +
+        `الإعجابات: ${fmt(t.likes)}\n` +
+        `التعليقات: ${fmt(t.comments)}\n` +
+        `المشاركات: ${fmt(t.shares)}\n\n` +
+        `معدل التفاعل: ${pct(er)}\n` +
+        `النمو: ${pct(t.growth)}\n\n` +
+        `ليش ممكن ينتشر؟ (تجريبي)\n` +
+        `- تفاعل عالي + نمو سريع\n` +
+        `- هاشتاق واضح وسهل المشاركة`
+      );
+    }
+
+    document.getElementById("q").addEventListener("input", render);
+    document.getElementById("sort").addEventListener("change", render);
+    document.getElementById("range").addEventListener("change", render);
+    document.getElementById("reset").addEventListener("click", ()=>{
+      document.getElementById("q").value="";
+      document.getElementById("sort").value="views";
+      document.getElementById("range").value="7d";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
