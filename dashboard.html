@@ -100,259 +100,4 @@
     .good{background:var(--good)}
     .warn{background:var(--warn)}
     .bad{background:var(--bad)}
-    .link{color:var(--accent);text-decoration:underline;cursor:pointer}
-
-    @media (max-width:900px){
-      .card{grid-column: span 6}
-    }
-    @media (max-width:600px){
-      header{flex-direction:column;align-items:stretch}
-      .controls{justify-content:space-between}
-      .card{grid-column: span 12}
-      th:nth-child(3), td:nth-child(3){display:none}
-    }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <b>Virlo (MVP)</b>
-        <span>Dashboard تجريبي — بدون API (إلى أن تتم موافقة TikTok)</span>
-      </div>
-
-      <div class="controls">
-        <input id="q" class="input" placeholder="ابحث عن هاشتاق/عنوان…" />
-        <select id="range">
-          <option value="24h">آخر 24 ساعة</option>
-          <option value="7d" selected>آخر 7 أيام</option>
-          <option value="30d">آخر 30 يوم</option>
-        </select>
-        <select id="sort">
-          <option value="views" selected>ترتيب: المشاهدات</option>
-          <option value="engagement">ترتيب: التفاعل</option>
-          <option value="growth">ترتيب: النمو</option>
-        </select>
-        <button class="btn" id="reset">إعادة</button>
-      </div>
-    </header>
-
-    <section class="grid">
-      <div class="card">
-        <h3>عدد الترندات (تجريبي)</h3>
-        <div class="metric" id="m_trends">—</div>
-        <div class="sub">حسب الفترة المحددة</div>
-      </div>
-      <div class="card">
-        <h3>إجمالي المشاهدات</h3>
-        <div class="metric" id="m_views">—</div>
-        <div class="sub">مجموع مشاهدات الترندات المعروضة</div>
-      </div>
-      <div class="card">
-        <h3>متوسط التفاعل</h3>
-        <div class="metric" id="m_er">—</div>
-        <div class="sub">تجريبي (Likes+Comments+Shares ÷ Views)</div>
-      </div>
-
-      <div class="panel">
-        <div class="panelTop">
-          <div>
-            <b>قائمة الترندات</b>
-            <span id="countNote">—</span>
-          </div>
-          <span>اضغط على “تفاصيل” لأي ترند</span>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>الترند</th>
-              <th>المشاهدات</th>
-              <th>التفاعل</th>
-              <th>النمو</th>
-              <th>الحالة</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    // بيانات تجريبية (نستبدلها لاحقاً بـ TikTok API)
-    const MOCK = [
-      { title:"#شتاء_جدة", views: 1284000, likes: 102000, comments: 5400, shares: 8900, growth: 62 },
-      { title:"#قهوة_الصباح", views: 845000,  likes: 74000,  comments: 3200, shares: 6100, growth: 41 },
-      { title:"#مقاطع_سريعة", views: 1620000, likes: 98000,  comments: 6100, shares: 12000,growth: 58 },
-      { title:"#تحدي_ضحك",   views: 690000,  likes: 51000,  comments: 2800, shares: 4300, growth: 33 },
-      { title:"#اكسبلور",     views: 420000,  likes: 37000,  comments: 1900, shares: 2100, growth: 19 },
-      { title:"#رياضة",       views: 980000,  likes: 86000,  comments: 4500, shares: 7400, growth: 47 },
-    ];
-
-    const fmt = (n) => Intl.NumberFormat("ar-SA").format(n);
-    const pct = (n) => Intl.NumberFormat("ar-SA", {maximumFractionDigits:1}).format(n) + "%";
-
-    function computeER(t){
-      const interactions = t.likes + t.comments + t.shares;
-      return t.views ? (interactions / t.views) * 100 : 0;
-    }
-
-    function statusChip(g){
-      if (g >= 50) return `<span class="chip"><span class="dot good"></span>قوي</span>`;
-      if (g >= 25) return `<span class="chip"><span class="dot warn"></span>متوسط</span>`;
-      return `<span class="chip"><span class="dot bad"></span>ضعيف</span>`;
-    }
-
-    function render(){
-      const q = document.getElementById("q").value.trim();
-      const sort = document.getElementById("sort").value;
-
-      let data = MOCK.slice();
-      if (q) data = data.filter(x => x.title.includes(q));
-
-      data.sort((a,b)=>{
-        if (sort === "views") return b.views - a.views;
-        if (sort === "growth") return b.growth - a.growth;
-        // engagement
-        return computeER(b) - computeER(a);
-      });
-
-      // metrics
-      document.getElementById("m_trends").textContent = fmt(data.length);
-      const totalViews = data.reduce((s,x)=>s+x.views,0);
-      document.getElementById("m_views").textContent = fmt(totalViews);
-
-      const avgER = data.length ? data.reduce((s,x)=>s+computeER(x),0)/data.length : 0;
-      document.getElementById("m_er").textContent = pct(avgER);
-
-      document.getElementById("countNote").textContent = `(${fmt(data.length)} ترند)`;
-
-      const rows = data.map(t=>{
-        const er = computeER(t);
-        return `
-          <tr>
-            <td>${t.title}</td>
-            <td>${fmt(t.views)}</td>
-            <td>${pct(er)}</td>
-            <td>${pct(t.growth)}</td>
-            <td>${statusChip(t.growth)}</td>
-<td><span class="link" data-title="${t.title}" onclick="openModal(this)">تفاصيل</span></td>
-          </tr>
-        `;
-      }).join("");
-
-      document.getElementById("rows").innerHTML = rows || `
-        <tr><td colspan="6" style="color:rgba(232,237,255,.7)">ما فيه نتائج للبحث الحالي.</td></tr>
-      `;
-    }
-
-    function openModal(el){
-  const title = el.getAttribute("data-title");
-  const t = MOCK.find(x=>x.title===title);
-  if(!t) return;
-
-  const er = computeER(t);
-  const interactions = t.likes + t.comments + t.shares;
-
-  document.getElementById("md_title").textContent = t.title;
-  document.getElementById("md_sub").textContent =
-    `Likes: ${fmt(t.likes)} • Comments: ${fmt(t.comments)} • Shares: ${fmt(t.shares)} • Total: ${fmt(interactions)}`;
-
-  document.getElementById("md_views").textContent = fmt(t.views);
-  document.getElementById("md_er").textContent = pct(er);
-  document.getElementById("md_growth").textContent = pct(t.growth);
-
-  // Rules بسيطة تعطي أسباب “منطقية”
-  const reasons = [];
-  if (t.growth >= 50) reasons.push("🚀 نمو سريع: الترند قاعد ينتشر بسرعة (Growth عالي).");
-  if (er >= 8) reasons.push("🔥 تفاعل قوي: الناس تتفاعل وتشارك (ER عالي).");
-  if (t.shares >= 8000) reasons.push("🔁 قابلية مشاركة عالية: المشاركات مرتفعة وهذا يرفع الانتشار.");
-  if (t.comments >= 4000) reasons.push("💬 نقاش واضح: التعليقات كثيرة → خوارزميات المنصات تحب الحوار.");
-  if (t.views >= 1200000) reasons.push("👀 وصول واسع: المشاهدات كبيرة → صار “عام” مو محدود.");
-
-  if (!reasons.length) reasons.push("🧪 مؤشرات هادئة: يحتاج تحسين (عنوان/هاشتاق/وقت نشر/Hook).");
-
-  document.getElementById("md_reasons").innerHTML = reasons.map(x=>`<div>${x}</div>`).join("");
-
-  document.getElementById("modalBackdrop").style.display = "block";
-}
-
-function closeModal(){
-  document.getElementById("modalBackdrop").style.display = "none";
-}
-
-// إغلاق عند الضغط خارج المودال
-document.getElementById("modalBackdrop").addEventListener("click", (e)=>{
-  if (e.target.id === "modalBackdrop") closeModal();
-});
-
-      const t = MOCK.find(x=>x.title===title);
-      if(!t) return;
-      const er = computeER(t);
-
-      alert(
-        `تفاصيل الترند: ${t.title}\n\n` +
-        `المشاهدات: ${fmt(t.views)}\n` +
-        `الإعجابات: ${fmt(t.likes)}\n` +
-        `التعليقات: ${fmt(t.comments)}\n` +
-        `المشاركات: ${fmt(t.shares)}\n\n` +
-        `معدل التفاعل: ${pct(er)}\n` +
-        `النمو: ${pct(t.growth)}\n\n` +
-        `ليش ممكن ينتشر؟ (تجريبي)\n` +
-        `- تفاعل عالي + نمو سريع\n` +
-        `- هاشتاق واضح وسهل المشاركة`
-      );
-    }
-
-    document.getElementById("q").addEventListener("input", render);
-    document.getElementById("sort").addEventListener("change", render);
-    document.getElementById("range").addEventListener("change", render);
-    document.getElementById("reset").addEventListener("click", ()=>{
-      document.getElementById("q").value="";
-      document.getElementById("sort").value="views";
-      document.getElementById("range").value="7d";
-      render();
-    });
-
-    render();
-  </script>
-<!-- Modal -->
-<div id="modalBackdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(4px); z-index:9999; padding:20px;">
-  <div style="max-width:720px; margin:6vh auto; border:1px solid rgba(255,255,255,.10); background:rgba(18,26,51,.95); border-radius:18px; overflow:hidden;">
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.10);">
-      <div>
-        <b id="md_title" style="font-size:16px;">—</b>
-        <div id="md_sub" style="color:rgba(232,237,255,.65); font-size:13px; margin-top:4px;">—</div>
-      </div>
-      <button class="btn" onclick="closeModal()">إغلاق</button>
-    </div>
-
-    <div style="padding:14px 16px; display:grid; grid-template-columns:repeat(12,1fr); gap:10px;">
-      <div class="card" style="grid-column:span 4; margin:0;">
-        <h3>المشاهدات</h3>
-        <div class="metric" id="md_views">—</div>
-      </div>
-      <div class="card" style="grid-column:span 4; margin:0;">
-        <h3>التفاعل</h3>
-        <div class="metric" id="md_er">—</div>
-      </div>
-      <div class="card" style="grid-column:span 4; margin:0;">
-        <h3>النمو</h3>
-        <div class="metric" id="md_growth">—</div>
-      </div>
-
-      <div class="panel" style="grid-column:span 12;">
-        <div class="panelTop">
-          <b>ليش ممكن ينتشر؟</b>
-          <span>نقاط تجريبية (Rules)</span>
-        </div>
-        <div style="padding:12px 16px; color:rgba(232,237,255,.9); line-height:1.8" id="md_reasons">—</div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+    .link{color:var(--accent);text-decoration:underline;cu
