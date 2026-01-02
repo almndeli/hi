@@ -43,15 +43,20 @@
 
     .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .input, select{
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      color:var(--text);
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.25);
+      color:#ffffff;
       padding:10px 12px;
       border-radius:14px;
       outline:none;
       min-width: 160px;
     }
     .input::placeholder{color:rgba(232,237,255,.55)}
+    select option{
+      background:#121a33;
+      color:#ffffff;
+    }
+
     .btn{
       background:rgba(106,167,255,.18);
       border:1px solid rgba(106,167,255,.35);
@@ -130,9 +135,9 @@
           <option value="30d">آخر 30 يوم</option>
         </select>
         <select id="sort">
-          <option value="views" selected>ترتيب: المشاهدات</option>
-          <option value="engagement">ترتيب: التفاعل</option>
-          <option value="growth">ترتيب: النمو</option>
+          <option value="views" selected>ترتيب: 👁️ المشاهدات</option>
+          <option value="engagement">ترتيب: ⚡ التفاعل</option>
+          <option value="growth">ترتيب: 🚀 النمو</option>
         </select>
         <button class="btn" id="reset">إعادة</button>
       </div>
@@ -168,7 +173,7 @@
           <thead>
             <tr>
               <th>الترند</th>
-              <th>المشاهدات</th>
+              <th>👁️ المشاهدات</th>
               <th>التفاعل</th>
               <th>النمو</th>
               <th>الحالة</th>
@@ -216,11 +221,9 @@
       data.sort((a,b)=>{
         if (sort === "views") return b.views - a.views;
         if (sort === "growth") return b.growth - a.growth;
-        // engagement
-        return computeER(b) - computeER(a);
+        return computeER(b) - computeER(a); // engagement
       });
 
-      // metrics
       document.getElementById("m_trends").textContent = fmt(data.length);
       const totalViews = data.reduce((s,x)=>s+x.views,0);
       document.getElementById("m_views").textContent = fmt(totalViews);
@@ -235,7 +238,7 @@
         return `
           <tr>
             <td>${t.title}</td>
-            <td>${fmt(t.views)}</td>
+            <td style="font-weight:700">${fmt(t.views)}</td>
             <td>${pct(er)}</td>
             <td>${pct(t.growth)}</td>
             <td>${statusChip(t.growth)}</td>
@@ -252,6 +255,7 @@
     function showDetails(title){
       const t = MOCK.find(x=>x.title===title);
       if(!t) return;
+
       const er = computeER(t);
 
       alert(
@@ -263,13 +267,12 @@
         `معدل التفاعل: ${pct(er)}\n` +
         `النمو: ${pct(t.growth)}\n\n` +
         `ليش ممكن ينتشر؟ (Rules)\n` +
-`${t.growth >= 50 ? "- 🚀 نمو سريع (Growth عالي)\n" : ""}` +
-`${er >= 8 ? "- 🔥 تفاعل قوي (ER عالي)\n" : ""}` +
-`${t.shares >= 8000 ? "- 🔁 مشاركات عالية ترفع الانتشار\n" : ""}` +
-`${t.comments >= 4000 ? "- 💬 تعليقات كثيرة = نقاش يزيد الدفع\n" : ""}` +
-`${t.views >= 1200000 ? "- 👀 وصل لعدد كبير من الناس (Views عالي)\n" : ""}` +
-`${(t.growth < 25 && er < 8) ? "- 🧪 مؤشرات هادئة: جرّب Hook أقوى/وقت نشر مختلف/هاشتاق أوضح\n" : ""}`
-
+        `${t.growth >= 50 ? "- 🚀 نمو سريع (Growth عالي)\n" : ""}` +
+        `${er >= 8 ? "- 🔥 تفاعل قوي (ER عالي)\n" : ""}` +
+        `${t.shares >= 8000 ? "- 🔁 مشاركات عالية ترفع الانتشار\n" : ""}` +
+        `${t.comments >= 4000 ? "- 💬 تعليقات كثيرة = نقاش يزيد الدفع\n" : ""}` +
+        `${t.views >= 1200000 ? "- 👀 وصل لعدد كبير من الناس (Views عالي)\n" : ""}` +
+        `${(t.growth < 25 && er < 8) ? "- 🧪 مؤشرات هادئة: جرّب Hook أقوى/وقت نشر مختلف/هاشتاق أوضح\n" : ""}`
       );
     }
 
