@@ -59,6 +59,7 @@
     .actions {
       display: flex;
       gap: 16px;
+      margin-bottom: 16px;
     }
 
     .btn {
@@ -87,6 +88,42 @@
 
     .btn-outline:hover {
       background: rgba(56,189,248,0.1);
+    }
+
+    /* تسجيل الإيميل */
+    .signup {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      max-width: 420px;
+    }
+
+    .signup input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      outline: none;
+    }
+
+    .signup input::placeholder {
+      color: #94a3b8;
+;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: #22c55e;
+    }
+
+    .error {
+      color: #f87171;
     }
 
     .card {
@@ -138,60 +175,101 @@
 
 <body>
 
-  <header>
-    <div class="logo">Virlo</div>
-    <div></div>
-  </header>
+<header>
+  <div class="logo">Virlo</div>
+</header>
 
-  <section class="hero">
-    <div>
-      <h1>
-        الترند ما ينتشر صدفة<br/>
-        <span>Virlo يشرح لك ليش</span>
-      </h1>
+<section class="hero">
+  <div>
+    <h1>
+      الترند ما ينتشر صدفة<br/>
+      <span>Virlo يشرح لك ليش</span>
+    </h1>
 
-      <p>
-        Virlo يساعد صناع المحتوى والمسوقين يفهمون ليش هذا الترند انتشر،
-        ويعطيك مؤشرات واضحة مثل التفاعل والنمو — بدون تعقيد.
-      </p>
+    <p>
+      Virlo يساعد صناع المحتوى والمسوقين يفهمون ليش هذا الترند انتشر،
+      ويعطيك مؤشرات واضحة مثل التفاعل والنمو — بدون تعقيد.
+    </p>
 
-      <div class="actions">
-        <button class="btn btn-primary">جرّب الديمو</button>
-        <button class="btn btn-outline">انضم للقائمة</button>
-      </div>
+    <div class="actions">
+      <button class="btn btn-primary">جرّب الديمو</button>
+      <button class="btn btn-outline">انضم للقائمة</button>
     </div>
 
-    <div class="card">
-      <h3>وش يسوي Virlo؟</h3>
-      <ul>
-        <li>يحلل الترندات المنتشرة</li>
-        <li>يقيس التفاعل والنمو</li>
-        <li>يشرح أسباب الانتشار</li>
-        <li>يساعدك تختار المحتوى الصح</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="card">
-      <h3>لصناع المحتوى</h3>
-      <p>اعرف وش تصور قبل لا تضيع وقتك على فكرة ما تنتشر.</p>
+    <!-- تسجيل الإيميل -->
+    <div class="signup">
+      <input type="email" id="email" placeholder="اكتب إيميلك" />
+      <button class="btn btn-primary" onclick="submitEmail()">إرسال</button>
     </div>
 
-    <div class="card">
-      <h3>للمسوقين</h3>
-      <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
-    </div>
+    <div id="status" class="status"></div>
+  </div>
 
-    <div class="card">
-      <h3>للعلامات التجارية</h3>
-      <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
-    </div>
-  </section>
+  <div class="card">
+    <h3>وش يسوي Virlo؟</h3>
+    <ul>
+      <li>يحلل الترندات المنتشرة</li>
+      <li>يقيس التفاعل والنمو</li>
+      <li>يشرح أسباب الانتشار</li>
+      <li>يساعدك تختار المحتوى الصح</li>
+    </ul>
+  </div>
+</section>
 
-  <footer>
-    Virlo – MVP تجريبي
-  </footer>
+<section class="features">
+  <div class="card">
+    <h3>لصناع المحتوى</h3>
+    <p>اعرف وش تصور قبل لا تضيع وقتك على فكرة ما تنتشر.</p>
+  </div>
+
+  <div class="card">
+    <h3>للمسوقين</h3>
+    <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
+  </div>
+
+  <div class="card">
+    <h3>للعلامات التجارية</h3>
+    <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
+  </div>
+</section>
+
+<footer>
+  Virlo – MVP تجريبي
+</footer>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbyUiHyw2UW3R5sD35PLdjWBI6ztqK3isKFX9O-53agT9x9PT0k4p70dCiXtk4ke6q7j/exec";
+
+  function submitEmail() {
+    const email = document.getElementById("email").value.trim();
+    const status = document.getElementById("status");
+
+    status.textContent = "";
+    status.className = "status";
+
+    if (!email || !email.includes("@")) {
+      status.textContent = "⚠️ أدخل إيميل صحيح";
+      status.classList.add("error");
+      return;
+    }
+
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    })
+    .then(res => res.ok ? res.json() : Promise.reject())
+    .then(() => {
+      status.textContent = "✅ تم تسجيلك بنجاح";
+      status.classList.add("success");
+      document.getElementById("email").value = "";
+    })
+    .catch(() => {
+      status.textContent = "⚠️ حصل خطأ، جرّب مرة ثانية";
+      status.classList.add("error");
+    });
+  }
+</script>
 
 </body>
 </html>
