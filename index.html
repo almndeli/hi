@@ -1,276 +1,123 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Virlo</title>
+  <meta charset="UTF-8">
+  <title>وش شابك؟ | تحليل الترند</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- وصف الموقع -->
+  <meta name="description" content="وش شابك؟ منصة لتحليل المقاطع الرائجة على تيك توك وفهم أسباب انتشارها والتفاعل عليها.">
+
   <style>
-    :root{
-      --bg1:#071427;
-      --bg2:#0A1E3A;
-      --card:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.10);
-      --text:#EAF2FF;
-      --muted:rgba(234,242,255,.70);
-      --blue:#2E73FF;
-      --cyan:#2FE4FF;
-      --r:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, Tahoma, Arial;
-      color:var(--text);
-      min-height:100vh;
-      background:
-        radial-gradient(900px 500px at 70% 30%, rgba(47,228,255,.10), transparent 60%),
-        radial-gradient(900px 500px at 25% 30%, rgba(46,115,255,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-    }
-    .wrap{max-width:1120px;margin:0 auto;padding:26px 18px 40px;}
-    .top{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:10px 14px;border:1px solid var(--stroke);border-radius:999px;
-      background:rgba(255,255,255,.03);backdrop-filter: blur(10px);
-    }
-    .pill{
-      padding:8px 14px;border-radius:999px;border:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);color:var(--muted);font-size:14px;
-    }
-    .brand{
-      font-weight:900;padding:8px 14px;border-radius:999px;
-      border:1px solid rgba(47,228,255,.25);background:rgba(47,228,255,.08);
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #0f0f0f;
+      color: #ffffff;
+      text-align: center;
     }
 
-    .main{
-      display:grid;grid-template-columns: 1.1fr .9fr;gap:18px;margin-top:22px;
-      align-items:start;
-    }
-    @media (max-width:900px){.main{grid-template-columns:1fr}}
-
-    .panel{
-      border:1px solid var(--stroke);background:var(--card);
-      border-radius:var(--r);backdrop-filter: blur(12px);
-      padding:18px;
+    header {
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #ff0050, #00f2ea);
     }
 
-    h1{margin:6px 0 10px;font-size:42px;line-height:1.15;}
-    .hBlue{color:var(--cyan);font-weight:900}
-    .desc{margin:0;color:var(--muted);line-height:1.85;font-size:14.5px;max-width:560px;}
-
-    .cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px;}
-    .btn{
-      border:none;cursor:pointer;font-weight:900;color:#fff;
-      padding:10px 16px;border-radius:14px;
-      background: linear-gradient(135deg, var(--blue), #1B4FFF);
-      box-shadow: 0 10px 30px rgba(46,115,255,.18);
-    }
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .btnGhost{
-      border:1px solid rgba(47,228,255,.25);
-      background:rgba(47,228,255,.08);
-      color:var(--text);
-      padding:10px 16px;border-radius:14px;font-weight:900;cursor:pointer;
+    header h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
     }
 
-    .inputWrap{
-      display:flex;align-items:center;gap:10px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      border-radius:14px;
-      padding:8px 10px;
-      min-width:320px;
-      flex: 1;
+    header p {
+      font-size: 18px;
+      opacity: 0.9;
     }
-    .inputWrap input{
-      flex:1;background:transparent;border:none;outline:none;color:var(--text);
-      font-size:14px;padding:6px 6px;min-width:180px;
+
+    section {
+      padding: 60px 20px;
     }
-    .inputWrap input::placeholder{color:rgba(234,242,255,.55)}
-    .msg{margin-top:10px;font-size:13px;color:var(--muted)}
-    .ok{color:#9CFFB0}
-    .err{color:#FFB0B0}
 
-    .boxTitle{font-weight:900;margin:0 0 10px}
-    ul{margin:0;padding:0 18px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
-
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-    @media (max-width:900px){.grid3{grid-template-columns:1fr}}
-    .grid3 .panel{background:rgba(255,255,255,.08);padding:16px}
-    .grid3 h3{margin:0 0 6px;font-size:16px;font-weight:900}
-    .grid3 p{margin:0;color:var(--muted);line-height:1.8;font-size:13.5px}
-
-    .foot{text-align:center;margin-top:20px;color:rgba(234,242,255,.55);font-size:12px}
-
-    .toast{
-      position:fixed;bottom:18px;left:18px;right:18px;max-width:720px;margin:0 auto;
-      display:none;align-items:center;justify-content:space-between;gap:10px;
-      border:1px solid rgba(255,255,255,.14);border-radius:14px;
-      background:rgba(0,0,0,.55);backdrop-filter: blur(12px);
-      padding:12px 14px;z-index:9999;
+    .features {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
     }
-    .toast.show{display:flex}
-    .toast .x{
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.08);
-      color:var(--text);
-      border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;
+
+    .box {
+      background: #1c1c1c;
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .box h3 {
+      color: #00f2ea;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 30px 20px;
+      background: #111;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    a {
+      color: #00f2ea;
+      text-decoration: none;
+      margin: 0 10px;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="pill">افهم الترند قبل ما يفوتك</div>
-      <div class="brand">Virlo</div>
-    </div>
 
-    <div class="main">
-      <!-- يمين: العنوان + التسجيل -->
-      <div class="panel">
-        <h1>الترند ما ينتشر صدفة<br><span class="hBlue">Virlo يشرح لك ليش</span></h1>
-        <p class="desc">
-          Virlo يساعدك كصانع محتوى/مسوق/علامة تجارية تفهم ليش هذا الترند انتشر،
-          ويعطيك مؤشرات واضحة مثل النمو والتفاعل… بدون تعقيد، قرارات أسرع.
-        </p>
+  <header>
+    <h1>وش شابك؟</h1>
+    <p>نفهم الترند… قبل ما يفوتك</p>
+  </header>
 
-        <div class="cta">
-          <button class="btnGhost" onclick="goDemo()">جرّب الديمو</button>
+  <section>
+    <h2>وش يسوي الموقع؟</h2>
+    <p>
+      منصة تحلل المقاطع الرائجة على تيك توك، وتوضح أكثر المحتويات انتشارًا،
+      ونسب التفاعل، وأنماط الترند.
+    </p>
+  </section>
 
-          <div class="inputWrap">
-            <input id="email" type="email" placeholder="كتب إيميلك للتجربة المبكرة" />
-            <button id="joinBtn" class="btn">انضم</button>
-          </div>
-        </div>
-
-        <div id="msg" class="msg"></div>
-
-        <div class="grid3">
-          <div class="panel">
-            <h3>لصنّاع المحتوى</h3>
-            <p>اعرف وش تصور قبل لا تتعب… وفهم ليه فكرة انتشرت.</p>
-          </div>
-          <div class="panel">
-            <h3>للمسوّقين</h3>
-            <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
-          </div>
-          <div class="panel">
-            <h3>للعلامات التجارية</h3>
-            <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
-          </div>
-        </div>
+  <section>
+    <div class="features">
+      <div class="box">
+        <h3>📈 تحليل الترند</h3>
+        <p>نعرفك وش المقاطع اللي قاعدة تنتشر الآن.</p>
       </div>
 
-      <!-- يسار: وش يسوي Virlo -->
-      <div class="panel">
-        <div class="boxTitle">وش يسوي Virlo؟</div>
-        <ul>
-          <li>يحلل الترندات المنتشرة</li>
-          <li>يقيس التفاعل والنمو</li>
-          <li>يشرح أسباب الانتشار</li>
-          <li>يساعدك تختار المحتوى الصح بالوقت الصح</li>
-        </ul>
+      <div class="box">
+        <h3>🔥 التفاعل</h3>
+        <p>مشاهدات، إعجابات، تعليقات، ومعدل النمو.</p>
+      </div>
+
+      <div class="box">
+        <h3>🎯 فهم الانتشار</h3>
+        <p>ليش المقطع انتشر؟ توقيت؟ محتوى؟ أسلوب؟</p>
+      </div>
+
+      <div class="box">
+        <h3>🧠 قرارات ذكية</h3>
+        <p>مفيد لصناع المحتوى والمسوقين.</p>
       </div>
     </div>
+  </section>
 
-    <div class="foot">Virlo — MVP تجريبي</div>
-  </div>
+  <footer>
+    <p>
+      © 2026 وش شابك؟
+    </p>
+    <p>
+      <a href="privacy.html">سياسة الخصوصية</a> |
+      <a href="terms.html">الشروط والأحكام</a>
+    </p>
+  </footer>
 
-  <div id="toast" class="toast">
-    <div id="toastText">تم ✅</div>
-    <button class="x" onclick="hideToast()">إغلاق</button>
-  </div>
-
-<script>
-  // ✅ رابط الـ Web App
-  const ENDPOINT = "https://script.google.com/macros/s/AKfycbyUiHyw2UW3R5sD35PLdjWBI6ztqK3isKFX9O-53agT9x9PT0k4p70dCiXtk4ke6q7j/exec";
-
-  const emailEl = document.getElementById("email");
-  const joinBtn = document.getElementById("joinBtn");
-  const msg = document.getElementById("msg");
-  const toast = document.getElementById("toast");
-  const toastText = document.getElementById("toastText");
-
-  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-  function showToast(t){
-    toastText.textContent = t;
-    toast.classList.add("show");
-    setTimeout(()=>toast.classList.remove("show"), 3500);
-  }
-  function hideToast(){ toast.classList.remove("show"); }
-
-  // ✅ JSONP (بدون فورم ظاهر + يتجاوز CORS)
-  function sendJSONP(email){
-    return new Promise((resolve, reject)=>{
-      const cb = "cb_" + Date.now() + "_" + Math.floor(Math.random()*1000);
-      const script = document.createElement("script");
-
-      window[cb] = (data)=>{
-        cleanup();
-        resolve(data);
-      };
-
-      const cleanup = ()=>{
-        try{ delete window[cb]; }catch(e){ window[cb]=undefined; }
-        if(script && script.parentNode) script.parentNode.removeChild(script);
-      };
-
-      script.onerror = ()=>{
-        cleanup();
-        reject(new Error("jsonp_error"));
-      };
-
-      const url = ENDPOINT
-        + "?email=" + encodeURIComponent(email)
-        + "&callback=" + encodeURIComponent(cb);
-
-      script.src = url;
-      document.body.appendChild(script);
-    });
-  }
-
-  async function submitEmail(){
-    const v = (emailEl.value || "").trim();
-
-    if(!validEmail(v)){
-      msg.textContent = "❌ اكتب إيميل صحيح";
-      msg.className = "msg err";
-      return;
-    }
-
-    joinBtn.disabled = true;
-    msg.textContent = "⏳ جاري التسجيل...";
-    msg.className = "msg";
-
-    try{
-      const data = await sendJSONP(v);
-
-      if(data && data.ok){
-        msg.textContent = "✅ تم تسجيلك بنجاح!";
-        msg.className = "msg ok";
-        showToast("✅ تم التسجيل بنجاح — بنوصلك أول ما نفتح Virlo");
-        emailEl.value = "";
-      }else{
-        throw new Error("bad_response");
-      }
-    }catch(e){
-      msg.textContent = "⚠️ حصل خطأ بالتسجيل… جرّب مرة ثانية";
-      msg.className = "msg err";
-      showToast("⚠️ ما تم التسجيل — جرّب مرة ثانية");
-    }finally{
-      joinBtn.disabled = false;
-    }
-  }
-
-  joinBtn.addEventListener("click", submitEmail);
-  emailEl.addEventListener("keydown", (e)=>{ if(e.key==="Enter") submitEmail(); });
-
-  function goDemo(){
-    // غيّرها لصفحة الديمو عندك إذا موجودة
-    // window.location.href = "./dashboard.html";
-    showToast("الديمو قريب ✅");
-  }
-</script>
 </body>
 </html>
