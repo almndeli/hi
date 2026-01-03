@@ -1,212 +1,304 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Virlo — افهم الترند قبل ما يفوتك</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virlo</title>
 
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#121a33;
-      --muted:#9aa4c0;
-      --text:#e8edff;
-      --line:rgba(255,255,255,.10);
-      --accent:#6aa7ff;
-      --good:#35d07f;
+      --bgTop:#07162B;
+      --bgMid:#071C36;
+      --bgBot:#0A2140;
+
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.07);
+      --stroke: rgba(255,255,255,.10);
+
+      --text:#EAF2FF;
+      --muted: rgba(234,242,255,.70);
+
+      --blue:#2E73FF;
+      --cyan:#2FE4FF;
+
+      --r:18px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:"Tajawal", system-ui;
-      background: radial-gradient(1200px 600px at 80% -10%, rgba(106,167,255,.25), transparent 60%),
-                  radial-gradient(900px 500px at 0% 0%, rgba(53,208,127,.18), transparent 55%),
-                  var(--bg);
+      font-family: system-ui, Tahoma, Arial;
       color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(900px 520px at 70% 35%, rgba(47,228,255,.10), transparent 60%),
+        radial-gradient(900px 520px at 25% 35%, rgba(46,115,255,.12), transparent 60%),
+        linear-gradient(180deg, var(--bgTop), var(--bgMid) 55%, var(--bgBot));
     }
-    .wrap{max-width:1100px;margin:0 auto;padding:28px}
-    header{
-      display:flex;justify-content:space-between;align-items:center;
-      border:1px solid var(--line);
-      background:rgba(18,26,51,.65);
-      padding:14px 18px;border-radius:18px;
-    }
-    header b{font-size:18px}
-    header span{color:var(--muted);font-size:13px}
 
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 48px;
+    }
+
+    /* ===== Top ===== */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(10px);
+      border-radius:999px;
+      padding:10px 14px;
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      white-space:nowrap;
+    }
+    .logo{
+      font-weight:900;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(47,228,255,.22);
+      background: rgba(47,228,255,.08);
+    }
+
+    /* ===== Hero layout ===== */
     .hero{
-      margin-top:40px;
+      margin-top:22px;
       display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:28px;
-      align-items:center;
+      grid-template-columns: 1fr 1.3fr;
+      gap:18px;
+      align-items:start;
     }
-    .hero h1{
-      font-size:40px;
-      line-height:1.2;
-      margin:0 0 16px 0;
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
     }
-    .hero p{
-      color:var(--muted);
-      font-size:18px;
-      line-height:1.8;
-      margin-bottom:22px;
-    }
-
-    .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .btn{
-      padding:14px 18px;
-      border-radius:16px;
-      font-size:15px;
-      cursor:pointer;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-    }
-    .btn.primary{
-      background:rgba(106,167,255,.22);
-      border-color:rgba(106,167,255,.45);
-    }
-
-    .input{
-      padding:14px 16px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      min-width:240px;
-      outline:none;
-    }
-    .input::placeholder{color:rgba(232,237,255,.55)}
 
     .card{
-      border:1px solid var(--line);
-      background:rgba(18,26,51,.65);
-      border-radius:20px;
+      border:1px solid var(--stroke);
+      background: var(--card);
+      border-radius: var(--r);
+      backdrop-filter: blur(12px);
       padding:18px;
     }
-    .card h3{margin:0 0 8px 0}
-    .card p{margin:0;color:var(--muted);line-height:1.7}
 
-    .grid{
-      margin-top:60px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-    }
-
-    .note{
-      margin-top:10px;
-      color:rgba(232,237,255,.70);
-      font-size:13px;
-      line-height:1.7;
-    }
-
-    footer{
-      margin-top:70px;
+    /* Left card (وش يسوي) */
+    .leftTitle{
+      font-weight:900;
+      font-size:18px;
+      margin:0 0 10px;
       text-align:center;
+    }
+    .bullets{
+      margin:0;
+      padding:0 18px 0 0;
       color:var(--muted);
-      font-size:13px;
+      line-height:1.9;
+      font-size:14px;
     }
 
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .hero h1{font-size:32px}
-      .grid{grid-template-columns:1fr}
+    /* Right hero text */
+    .headline{
+      margin:0;
+      font-size:44px;
+      line-height:1.15;
+      font-weight:900;
+    }
+    .headline .accent{
+      color: var(--cyan);
+      font-weight:900;
+      display:inline-block;
+    }
+    .desc{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14.5px;
+      max-width:640px;
+    }
+
+    /* CTA row: (جرّب الديمو) + input + (انضم) */
+    .ctaRow{
+      margin-top:16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      font-weight:900;
+      border-radius:14px;
+      padding:10px 16px;
+      color:#fff;
+      background: linear-gradient(135deg, var(--blue), #1B4FFF);
+      box-shadow: 0 10px 26px rgba(46,115,255,.18);
+    }
+    .btnGhost{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      cursor:pointer;
+      font-weight:900;
+      border-radius:14px;
+      padding:10px 16px;
+    }
+
+    .emailBox{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      border-radius:14px;
+      padding:8px 10px;
+      min-width:340px;
+      flex: 1;
+      max-width:520px;
+    }
+    .emailBox input{
+      flex:1;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:var(--text);
+      font-size:14px;
+      padding:6px 8px;
+      min-width:180px;
+    }
+    .emailBox input::placeholder{
+      color: rgba(234,242,255,.55);
+    }
+
+    /* feature cards bottom */
+    .features{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .features{grid-template-columns:1fr}
+    }
+    .feature{
+      border:1px solid rgba(255,255,255,.12);
+      background: var(--card2);
+      border-radius: var(--r);
+      padding:16px;
+      text-align:center;
+    }
+    .feature h3{
+      margin:0 0 6px;
+      font-size:16px;
+      font-weight:900;
+    }
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.85;
+      font-size:13.5px;
+    }
+
+    .foot{
+      margin-top:20px;
+      text-align:center;
+      color: rgba(234,242,255,.55);
+      font-size:12px;
+    }
+
+    /* small message area */
+    .msg{
+      margin-top:10px;
+      font-size:13px;
+      color: var(--muted);
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
-      <b>Virlo</b>
-      <span>افهم الترند قبل ما يفوتك</span>
-    </header>
+    <div class="topbar">
+      <div class="pill">افهم الترند قبل ما يفوتك</div>
+      <div class="logo">Virlo</div>
+    </div>
 
-    <section class="hero">
-      <div>
-        <h1>
+    <div class="hero">
+      <!-- LEFT: وش يسوي Virlo -->
+      <div class="card">
+        <div class="leftTitle">وش يسوي Virlo؟</div>
+        <ul class="bullets">
+          <li>يحلل الترندات المنتشرة</li>
+          <li>يقيس التفاعل والنمو</li>
+          <li>يشرح أسباب الانتشار</li>
+          <li>يساعدك تختار المحتوى الصح بالوقت الصح</li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: العنوان + CTA + الكروت -->
+      <div class="card">
+        <h1 class="headline">
           الترند ما ينتشر صدفة<br>
-          <span style="color:var(--accent)">Virlo يشرح لك ليش</span>
+          <span class="accent">Virlo يشرح لك ليش</span>
         </h1>
 
-        <p>
-          Virlo يساعد صناع المحتوى والمسوقين يفهمون
-          <b>ليش هذا الترند انتشر</b>،
-          ويعطيك مؤشرات واضحة مثل <b>النمو</b> و<b>التفاعل</b>.
-          بدون تعقيد… قرارات أسرع.
+        <p class="desc">
+          Virlo يساعدك كصانع محتوى، والمسوقين، والمهتمون… ليش هذا الترند انتشر،
+          ويعطيك مؤشرات واضحة مثل النمو والتفاعل… بدون تعقيد، قرارات أسرع.
         </p>
 
-        <div class="cta">
-          <a href="dashboard.html" class="btn primary">جرّب الديمو</a>
+        <div class="ctaRow">
+          <button class="btnGhost" id="demoBtn">جرّب الديمو</button>
 
-          <form id="emailForm" onsubmit="saveEmail(event)" style="display:flex; gap:10px; flex-wrap:wrap">
-            <input id="email" class="input" type="email" required placeholder="اكتب إيميلك للتحديثات" />
-            <button class="btn primary" type="submit">انضم</button>
-          </form>
+          <div class="emailBox">
+            <input id="email" type="email" placeholder="كتب إيميلك للتحديثات" />
+          </div>
+
+          <button class="btn" id="joinBtn">انضم</button>
         </div>
 
-        <div class="note" id="emailMsg" style="display:none"></div>
-      </div>
+        <div class="msg" id="msg"></div>
 
-      <div class="card">
-        <h3>وش يسوي Virlo؟</h3>
-        <p>
-          • يحلل الترندات المنتشرة<br>
-          • يقيس التفاعل والنمو<br>
-          • يشرح أسباب الانتشار<br>
-          • يساعدك تختار المحتوى الصح بالوقت الصح
-        </p>
+        <div class="features">
+          <div class="feature">
+            <h3>لصنّاع المحتوى</h3>
+            <p>اعرف وش تصور قبل لا تتعب… وفهم ليه فكرة انتشرت.</p>
+          </div>
+          <div class="feature">
+            <h3>للمسوّقين</h3>
+            <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
+          </div>
+          <div class="feature">
+            <h3>للعلامات التجارية</h3>
+            <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="grid">
-      <div class="card">
-        <h3>لصناع المحتوى</h3>
-        <p>اعرف وش تصور قبل لا تضيع وقتك على فكرة ما تنتشر.</p>
-      </div>
-      <div class="card">
-        <h3>للمسوقين</h3>
-        <p>اختصر وقت التحليل وركّز على الفرص الحقيقية.</p>
-      </div>
-      <div class="card">
-        <h3>للعلامات التجارية</h3>
-        <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
-      </div>
-    </section>
-
-    <footer>
-      © Virlo — MVP تجريبي
-    </footer>
+    <div class="foot">Virlo — MVP تجريبي</div>
   </div>
 
   <script>
-    function saveEmail(e){
-      e.preventDefault();
-      const el = document.getElementById("email");
-      const msg = document.getElementById("emailMsg");
-      const email = (el.value || "").trim().toLowerCase();
+    // الآن: نثبت الشكل فقط ✅
+    // بعد ما تقول "الشكل رجع مثل أول" نركّب إرسال الإيميل بطريقة مضمونة.
+    const msg = document.getElementById("msg");
+    document.getElementById("demoBtn").addEventListener("click", () => {
+      msg.textContent = "الديمو قريب ✅";
+    });
 
-      // حفظ بسيط (مؤقت) داخل المتصفح
-      const key = "virlo_waitlist_emails";
-      const list = JSON.parse(localStorage.getItem(key) || "[]");
-      if (!list.includes(email)) list.push(email);
-      localStorage.setItem(key, JSON.stringify(list));
-
-      msg.style.display = "block";
-      msg.textContent = "تم تسجيل إيميلك ✅ (نسخة MVP).";
-      el.value = "";
-    }
+    document.getElementById("joinBtn").addEventListener("click", () => {
+      msg.textContent = "تمام… خلنا نركّب إرسال الإيميل بعد ما نتأكد الشكل 👍";
+    });
   </script>
 </body>
 </html>
