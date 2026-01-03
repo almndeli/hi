@@ -9,16 +9,19 @@
     :root{
       --bg1:#050a16;
       --bg2:#071a2f;
+
       --card: rgba(19, 33, 64, .55);
       --card2: rgba(15, 23, 42, .55);
       --stroke: rgba(148,163,184,.22);
+
       --text:#e8eefc;
       --muted:#b6c2e2;
+
       --blue:#38bdf8;
       --blue2:#1d4ed8;
-      --glow: rgba(56,189,248,.25);
+
       --shadow: 0 16px 48px rgba(0,0,0,.35);
-      --radius: 18px;
+      --radius: 20px;
     }
 
     *{box-sizing:border-box}
@@ -35,7 +38,7 @@
       overflow-x:hidden;
     }
 
-    /* خلفية ناعمة مثل اللي بالصورة */
+    /* خلفية ناعمة */
     .noise{
       position:fixed; inset:0;
       pointer-events:none;
@@ -47,16 +50,15 @@
     .wrap{
       width:min(1160px, 92vw);
       margin:0 auto;
-      padding:24px 0 54px;
+      padding:20px 0 54px;
     }
 
-    /* الهيدر (الكبسولة بالنص + Virlo يمين) */
+    /* ===== Top long pill ===== */
     header.topbar{
-      position:relative;
       display:flex;
-      justify-content:flex-start; /* لأننا RTL */
+      justify-content:center;
       align-items:center;
-      padding:16px 10px 22px;
+      padding:14px 10px 18px;
     }
 
     .pill{
@@ -64,66 +66,122 @@
       border: 1px solid var(--stroke);
       color: #d4defa;
       border-radius: 999px;
-      padding: 10px 16px;
+      padding: 12px 18px;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 10px 26px rgba(0,0,0,.18);
     }
 
-    .center-pill{
-      position:absolute;
-      right:50%;
-      transform: translateX(50%);
-      font-size:14px;
-      opacity:.95;
+    .long-pill{
+      width: min(980px, 92vw);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
     }
 
-    .brand-pill{
+    .long-pill .brand{
       color: var(--blue);
-      font-weight:800;
-      letter-spacing:.3px;
-      font-size:14px;
-      padding: 10px 18px;
+      font-weight: 900;
+      letter-spacing: .3px;
+      font-size: 15px;
     }
 
-    /* المحتوى الرئيسي */
+    .long-pill .slogan{
+      color:#d4defa;
+      font-weight: 800;
+      opacity:.95;
+      font-size: 14px;
+    }
+
+    /* ===== Layout ===== */
     .hero{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
-      gap:28px;
+      gap:22px;
       align-items:start;
       margin-top:8px;
     }
-
-    @media (max-width: 960px){
+    @media (max-width: 980px){
       .hero{ grid-template-columns: 1fr; }
-      .center-pill{ position:static; transform:none; margin:12px auto 0; }
-      header.topbar{ flex-direction:column; gap:10px; align-items:flex-start; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* ===== Right content ===== */
+    .mainCard{
+      padding:22px 22px;
     }
 
     .h-title{
       font-size:46px;
       line-height:1.2;
-      margin:10px 0 10px;
+      margin:6px 0 10px;
       font-weight:900;
       letter-spacing:.2px;
     }
-    .h-title .accent{ color: var(--blue); text-shadow: 0 0 26px var(--glow); }
-
+    .h-title .accent{
+      color: var(--blue);
+      text-shadow: 0 0 26px rgba(56,189,248,.25);
+    }
     .h-sub{
-      margin:0 0 18px;
+      margin:0 0 16px;
       color:var(--muted);
-      max-width: 560px;
-      line-height:1.8;
+      max-width: 640px;
+      line-height:1.85;
       font-size:15px;
     }
 
-    .cta-row{
+    /* demo long pill (بديل جرّب الديمو) */
+    .demoWrapper{
       display:flex;
-      gap:10px;
+      justify-content:center;
+      margin: 10px 0 18px;
+    }
+    .demoPill{
+      width:min(720px, 100%);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 22px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(29,78,216,.95), rgba(56,189,248,.95));
+      border: 1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition:.25s ease;
+      box-shadow: 0 18px 44px rgba(29,78,216,.20);
+    }
+    .demoPill:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 22px 55px rgba(56,189,248,.22);
+    }
+    .demoRight{
+      font-weight:900;
+      font-size:18px;
+      color:#ffffff;
+      letter-spacing:.4px;
+    }
+    .demoLeft{
+      font-weight:800;
+      font-size:15px;
+      color:#e6f0ff;
+      opacity:.95;
+    }
+
+    /* signup input */
+    .ctaRow{
+      display:flex;
+      gap:12px;
       flex-wrap:wrap;
       align-items:center;
-      margin-top:10px;
+      margin-top:6px;
     }
 
     .input{
@@ -135,7 +193,7 @@
       border-radius: 999px;
       background: rgba(10, 16, 32, .50);
       border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
+      box-shadow: 0 14px 36px rgba(0,0,0,.22);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
@@ -156,7 +214,7 @@
       cursor:pointer;
       border-radius: 999px;
       padding: 12px 16px;
-      font-weight:800;
+      font-weight:900;
       font-size:14px;
       color:white;
       background: linear-gradient(180deg, rgba(56,189,248,.95), rgba(29,78,216,.95));
@@ -166,68 +224,71 @@
     }
     .btn:hover{ transform: translateY(-1px); filter:brightness(1.02); }
     .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; transform:none; }
 
-    .btn-outline{
-      background: rgba(10,16,32,.45);
-      border: 1px solid var(--stroke);
-      color: #d7e2ff;
-      box-shadow: none;
+    .msgInline{
+      margin-top:10px;
+      font-size:13px;
+      color: rgba(182,194,226,.95);
+      min-height: 18px;
     }
+    .msgOk{ color:#9CFFB0; }
+    .msgErr{ color:#FFB0B0; }
 
-    .card{
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+    /* ===== Left side card ===== */
+    .sideCard{
+      padding:20px 20px;
+      min-height: 180px;
     }
-
-    .side-card{
-      padding:18px 18px;
-      min-height: 175px;
-    }
-
-    .side-card h3{
+    .sideCard h3{
       margin:0 0 10px;
       font-size:16px;
       font-weight:900;
       color:#dfe9ff;
     }
-
     .bullets{
       margin:0;
       padding:0 16px 0 0;
       color: rgba(232,238,252,.88);
       line-height:1.9;
-      font-size:13.5px;
+      font-size:14px;
     }
 
+    /* ===== Bigger balanced mini cards ===== */
     .grid3{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:14px;
+      gap:18px;
       margin-top:18px;
     }
-    @media (max-width: 960px){
+    @media (max-width: 980px){
       .grid3{ grid-template-columns: 1fr; }
     }
 
     .mini{
-      padding:18px 16px;
+      padding:26px 24px;            /* أكبر */
+      border-radius:22px;           /* أنعم */
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      transition: all .28s ease;
       text-align:right;
     }
+    .mini:hover{
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.09);
+      box-shadow: 0 18px 50px rgba(0,0,0,.28);
+    }
     .mini h4{
-      margin:0 0 8px;
-      font-size:15px;
+      margin:0 0 10px;
+      font-size:20px;               /* أكبر */
       font-weight:900;
-      color:#eaf2ff;
+      color:#ffffff;
     }
     .mini p{
       margin:0;
-      color: rgba(182,194,226,.95);
-      line-height:1.8;
-      font-size:13px;
+      font-size:15.5px;             /* أكبر */
+      line-height:1.75;
+      color:#dbe7ff;
     }
 
     .footer{
@@ -238,12 +299,12 @@
       font-size:12px;
     }
 
-    /* صندوق رسائل النجاح/الخطأ */
+    /* toast message */
     .toast{
       position: fixed;
       right: 16px;
       bottom: 16px;
-      max-width: 420px;
+      max-width: 460px;
       padding: 14px 14px;
       border-radius: 14px;
       border: 1px solid var(--stroke);
@@ -259,20 +320,6 @@
     .toast .t2{ margin:0; color: rgba(182,194,226,.95); line-height:1.7; font-size:13px; }
     .toast.ok{ border-color: rgba(34,197,94,.35); }
     .toast.err{ border-color: rgba(239,68,68,.35); }
-
-    /* تحميل على زر التسجيل */
-    .btn[disabled]{ opacity:.6; cursor:not-allowed; transform:none; }
-    .spinner{
-      display:inline-block;
-      width:14px; height:14px;
-      border-radius:50%;
-      border: 2px solid rgba(255,255,255,.55);
-      border-top-color: rgba(255,255,255,0);
-      margin-inline: 8px;
-      vertical-align:-2px;
-      animation: spin .8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
@@ -280,36 +327,46 @@
   <div class="noise"></div>
 
   <div class="wrap">
+    <!-- Top long pill -->
     <header class="topbar">
-      <div class="pill brand-pill">Virlo</div>
-      <div class="pill center-pill">افهم الترند قبل ما يفوتك</div>
+      <div class="pill long-pill">
+        <span class="brand">Virlo</span>
+        <span class="slogan">افهم الترند قبل ما يفوتك</span>
+      </div>
     </header>
 
     <main class="hero">
-      <!-- يمين: النص + التسجيل -->
-      <section>
+      <!-- Right -->
+      <section class="card mainCard">
         <h1 class="h-title">
           الترند ما ينتشر صدفة<br>
           <span class="accent">Virlo يشرح لك ليش</span>
         </h1>
 
         <p class="h-sub">
-          Virlo يساعدك صُنّاع المحتوى، والمسوقين يفهمون ليش هذا الترند انتشر،
+          Virlo يساعد صُنّاع المحتوى والمسوقين يفهمون ليش هذا الترند انتشر،
           ويعطيك مؤشرات واضحة مثل النمو والتفاعل… بدون تعقيد. قرارات أسرع.
         </p>
 
-        <div class="cta-row">
-          <!-- زر مساعد (اختياري) -->
-          <button class="btn btn-outline" type="button" id="demoBtn">الديمو</button>
+        <!-- Demo pill بدل جرّب الديمو -->
+        <div class="demoWrapper">
+          <button class="demoPill" type="button" id="demoBtn">
+            <span class="demoRight">Virlo</span>
+            <span class="demoLeft">افهم الترند قبل ما يفوتك</span>
+          </button>
+        </div>
 
-          <!-- تسجيل الإيميل داخل الموقع -->
+        <!-- Signup -->
+        <div class="ctaRow">
           <div class="input">
             <input id="email" type="email" autocomplete="email" placeholder="اكتب إيميلك للتجربة" />
           </div>
-
-          <button class="btn" type="button" id="joinBtn">جزء الديمو</button>
+          <button class="btn" type="button" id="joinBtn">انضم</button>
         </div>
 
+        <div id="inlineMsg" class="msgInline"></div>
+
+        <!-- Bigger balanced mini cards -->
         <div class="grid3">
           <div class="card mini">
             <h4>لصنّاع المحتوى</h4>
@@ -328,8 +385,8 @@
         <div class="footer">Virlo — MVP تجريبي ©</div>
       </section>
 
-      <!-- يسار: كرت "وش يسوي Virlo؟" -->
-      <aside class="card side-card">
+      <!-- Left -->
+      <aside class="card sideCard">
         <h3>وش يسوي Virlo؟</h3>
         <ul class="bullets">
           <li>يحلل الترندات المنتشرة</li>
@@ -347,12 +404,13 @@
   </div>
 
   <script>
-    // ✅ رابط الـ Apps Script Web App اللي عطيتني
+    // رابط الـ Apps Script Web App
     const ENDPOINT = "https://script.google.com/macros/s/AKfycbyUiHyw2UW3R5sD35PLdjWBI6ztqK3isKFX9O-53agT9x9PT0k4p70dCiXtk4ke6q7j/exec";
 
     const emailEl = document.getElementById("email");
     const joinBtn = document.getElementById("joinBtn");
     const demoBtn = document.getElementById("demoBtn");
+    const inlineMsg = document.getElementById("inlineMsg");
 
     const toast = document.getElementById("toast");
     const toastTitle = document.getElementById("toastTitle");
@@ -368,69 +426,81 @@
       window.__t = setTimeout(()=>toast.classList.remove("show"), 4200);
     }
 
+    function setInline(type, text){
+      inlineMsg.className = "msgInline " + (type === "ok" ? "msgOk" : type === "err" ? "msgErr" : "");
+      inlineMsg.textContent = text || "";
+    }
+
     function isValidEmail(v){
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||"").trim());
     }
+
+    // زر الكبسولة (الديمو) — خلّيناه يركز على الإيميل
+    demoBtn.addEventListener("click", ()=>{
+      emailEl.focus();
+      showToast("ok","✨ جاهزين","اكتب إيميلك واضغط (انضم) عشان نسجلك.");
+    });
 
     async function submitEmail(){
       const email = (emailEl.value || "").trim();
 
       if(!isValidEmail(email)){
-        showToast("err", "⚠️ إيميل غير صحيح", "تأكد من كتابة الإيميل بشكل صحيح ثم جرّب.");
+        setInline("err","⚠️ اكتب إيميل صحيح");
+        showToast("err","⚠️ إيميل غير صحيح","تأكد من كتابة الإيميل بشكل صحيح ثم جرّب.");
         emailEl.focus();
         return;
       }
 
       joinBtn.disabled = true;
       const oldText = joinBtn.textContent;
-      joinBtn.innerHTML = '<span class="spinner"></span> جاري التسجيل...';
+      joinBtn.textContent = "جاري التسجيل...";
+      setInline("", "⏳ جاري التسجيل...");
 
       try{
-        // نرسل بيانات بسيطة: email + source
+        // إرسال form-urlencoded (أسهل لـ Apps Script)
         const payload = new URLSearchParams();
         payload.append("email", email);
         payload.append("source", "virlo-site");
 
-        // محاولة عادية (تحتاج CORS من Apps Script)
         const res = await fetch(ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
           body: payload.toString()
         });
 
-        // بعض إعدادات Apps Script ترجع 302/HTML أو تمنع CORS
-        // بنحاول نقرأ JSON إذا موجود
+        // نحاول نفهم هل نجحت
         let ok = false;
         try{
           const data = await res.json();
           ok = !!(data && (data.ok || data.success));
         }catch(e){
-          // إذا ما قدرنا نقرأ JSON بس الاستجابة OK
           ok = res.ok;
         }
-
         if(!ok) throw new Error("not-ok");
 
-        showToast("ok", "✅ تم التسجيل", "تم حفظ إيميلك بنجاح. بنرسل لك الوصول أول ما يجهز.");
+        setInline("ok","✅ تم تسجيلك بنجاح");
+        showToast("ok","✅ تم التسجيل","تم حفظ إيميلك بنجاح. بنرسل لك الوصول أول ما يجهز.");
         emailEl.value = "";
       }catch(err){
-        // خطة بديلة: no-cors (ما نقدر نقرأ النتيجة، بس غالباً يسجّل إذا الـ Script مضبوط)
+        // fallback no-cors: قد لا نقدر نقرأ الرد، لكن غالباً يسجل إذا السكربت مضبوط
         try{
-          const payload = new URLSearchParams();
-          payload.append("email", (emailEl.value||"").trim());
-          payload.append("source", "virlo-site");
+          const payload2 = new URLSearchParams();
+          payload2.append("email", email);
+          payload2.append("source", "virlo-site");
 
           await fetch(ENDPOINT, {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-            body: payload.toString()
+            body: payload2.toString()
           });
 
-          showToast("ok", "✅ تم الإرسال", "إذا ما ظهر خطأ في السكربت، الإيميل غالباً اتسجل. تقدر تتأكد من Google Sheet.");
+          setInline("ok","✅ تم الإرسال");
+          showToast("ok","✅ تم الإرسال","إذا السكربت شغال، الإيميل اتسجل. تقدر تتأكد من Google Sheet.");
           emailEl.value = "";
         }catch(e2){
-          showToast("err", "⚠️ حصل خطأ بالتسجيل", "جرّب مرة ثانية. وإذا تكرر، المشكلة غالباً من إعدادات Apps Script أو الصلاحيات.");
+          setInline("err","⚠️ حصل خطأ بالتسجيل… جرّب مرة ثانية");
+          showToast("err","⚠️ حصل خطأ","جرّب مرة ثانية. وإذا تكرر، المشكلة من إعدادات Apps Script.");
         }
       }finally{
         joinBtn.disabled = false;
@@ -438,21 +508,12 @@
       }
     }
 
-    // زر التسجيل
     joinBtn.addEventListener("click", submitEmail);
-
-    // Enter داخل الإيميل
     emailEl.addEventListener("keydown", (e)=>{
       if(e.key === "Enter"){
         e.preventDefault();
         submitEmail();
       }
-    });
-
-    // زر الديمو (ممكن نخليه يركز على الإيميل)
-    demoBtn.addEventListener("click", ()=>{
-      emailEl.focus();
-      showToast("ok", "✨ جاهزين", "اكتب إيميلك واضغط (جزء الديمو) عشان نسجلك.");
     });
   </script>
 </body>
