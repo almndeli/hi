@@ -1,60 +1,65 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Virlo – Early Access</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virlo – Early Access</title>
 
-<style>
-:root{
-  --bg1:#071326; --bg2:#0B1A33;
-  --text:#EAF0FF; --muted:rgba(234,240,255,.7);
-  --brand:#4F7CFF; --brand2:#6C5CE7;
-  --stroke:rgba(255,255,255,.12);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;font-family:system-ui,Tahoma;
-  color:var(--text);
-  background:linear-gradient(180deg,var(--bg1),var(--bg2));
-}
-.wrap{max-width:1100px;margin:auto;padding:30px}
-.top{display:flex;justify-content:space-between;align-items:center;
-  border:1px solid var(--stroke);padding:14px;border-radius:999px}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:25px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}}
-.panel{border:1px solid var(--stroke);padding:24px;border-radius:16px}
-h1{margin:0 0 10px;font-size:34px}
-p{color:var(--muted);line-height:1.8}
-.btn{
-  padding:12px 18px;border-radius:12px;
-  border:none;cursor:pointer;font-weight:800
-}
-.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
-.ghost{background:transparent;border:1px solid var(--stroke);color:#fff}
-.cta{display:flex;gap:10px;margin-top:15px}
-
-/* Popup */
-.overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;align-items:center;justify-content:center;
-  z-index:999;
-}
-.popup{
-  width:100%;max-width:520px;
-  background:#0B1A33;border-radius:16px;
-  padding:16px;position:relative;
-}
-.popup iframe{
-  width:100%;height:520px;border:none;border-radius:12px
-}
-.close{
-  position:absolute;top:10px;left:10px;
-  background:none;border:none;color:#fff;
-  font-size:20px;cursor:pointer
-}
-</style>
+  <style>
+    :root{
+      --bg1:#071326; --bg2:#0B1A33;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.10);
+      --text:#EAF0FF; --muted:rgba(234,240,255,.72);
+      --brand:#4F7CFF; --brand2:#6C5CE7;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, Tahoma, Arial;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+    }
+    .wrap{max-width:1100px;margin:auto;padding:28px}
+    .top{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 18px;border:1px solid var(--stroke);
+      border-radius:999px;background:rgba(255,255,255,.03)
+    }
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:24px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}}
+    .card{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      border-radius:var(--radius);
+      padding:24px;
+    }
+    h1{margin:0 0 10px;font-size:34px}
+    p{color:var(--muted);line-height:1.8}
+    .emailBox{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px
+    }
+    input{
+      flex:1;min-width:220px;
+      padding:12px 14px;border-radius:12px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+    }
+    button{
+      padding:12px 18px;border-radius:12px;
+      border:none;cursor:pointer;font-weight:800;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;
+    }
+    .msg{margin-top:10px;font-size:13px}
+    .ok{color:#9CFFB0}
+    .err{color:#FF9C9C}
+    .footer{text-align:center;margin-top:24px;color:rgba(234,240,255,.55);font-size:12px}
+  </style>
 </head>
 
 <body>
@@ -66,48 +71,85 @@ p{color:var(--muted);line-height:1.8}
   </div>
 
   <div class="hero">
-    <div class="panel">
+    <div class="card">
       <h1>الترند ما ينتشر صدفة<br><span style="color:#76A7FF">Virlo يشرح لك ليش</span></h1>
       <p>
-        حلّل الترندات، افهم التفاعل والنمو،
-        وخذ قرارك بأرقام واضحة.
+        سجّل إيميلك للتجربة المبكرة، وخلك أول واحد يعرف
+        كيف وليش الترند ينتشر.
       </p>
 
-      <div class="cta">
-        <a class="btn primary" href="./dashboard.html">جرّب الديمو</a>
-        <button class="btn ghost" onclick="openForm()">خلّي إيميلك</button>
+      <div class="emailBox">
+        <input id="email" type="email" placeholder="اكتب إيميلك" />
+        <button id="btn">سجّل</button>
       </div>
+
+      <div id="msg" class="msg"></div>
     </div>
 
-    <div class="panel">
+    <div class="card">
       <ul>
         <li>تحليل الترندات</li>
-        <li>شرح سبب الانتشار</li>
+        <li>شرح أسباب الانتشار</li>
+        <li>قياس التفاعل والنمو</li>
         <li>اختيار المحتوى الصح</li>
       </ul>
     </div>
   </div>
 
-</div>
+  <div class="footer">Virlo — MVP تجريبي</div>
 
-<!-- Popup Form -->
-<div class="overlay" id="formOverlay">
-  <div class="popup">
-    <button class="close" onclick="closeForm()">✕</button>
-    <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLScdX1HTaay7qgCrker5-ejhYMTO2FRJtCGoxSuVcSXlGZAsLg/viewform?embedded=true">
-    </iframe>
-  </div>
 </div>
 
 <script>
-function openForm(){
-  document.getElementById("formOverlay").style.display="flex";
-}
-function closeForm(){
-  document.getElementById("formOverlay").style.display="none";
-}
-</script>
+  const ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbyUiHyw2UW3R5sD35PLdjWBI6ztqK3isKFX9O-53agT9x9PT0k4p70dCiXtk4ke6q7j/exec";
 
+  const email = document.getElementById("email");
+  const btn = document.getElementById("btn");
+  const msg = document.getElementById("msg");
+
+  function validEmail(v){
+    return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v);
+  }
+
+  btn.onclick = async () => {
+    const v = email.value.trim();
+
+    if (!validEmail(v)){
+      msg.textContent = "❌ اكتب إيميل صحيح";
+      msg.className = "msg err";
+      return;
+    }
+
+    btn.disabled = true;
+    msg.textContent = "⏳ جاري التسجيل...";
+
+    try{
+      const r = await fetch(ENDPOINT,{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ email: v })
+      });
+      const d = await r.json();
+
+      if (d.ok){
+        msg.textContent = "✅ تم تسجيلك بنجاح! بنوصلك أول ما نفتح Virlo.";
+        msg.className = "msg ok";
+        email.value = "";
+      }else{
+        throw new Error();
+      }
+    }catch{
+      msg.textContent = "⚠️ حصل خطأ، حاول مرة ثانية";
+      msg.className = "msg err";
+    }finally{
+      btn.disabled = false;
+    }
+  };
+
+  email.addEventListener("keydown", e=>{
+    if(e.key==="Enter") btn.click();
+  });
+</script>
 </body>
 </html>
