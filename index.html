@@ -1,127 +1,113 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Virlo – Early Access</title>
-  <meta name="description" content="Virlo يشرح لك ليش الترند ينتشر، ويعطيك أرقام واضحة عن المشاهدات والتفاعل والنمو." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Virlo – Early Access</title>
 
-  <style>
-    :root{
-      --bg1:#071326;
-      --bg2:#0B1A33;
-      --card:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.10);
-      --text:#EAF0FF;
-      --muted:rgba(234,240,255,.72);
-      --brand:#4F7CFF;
-      --brand2:#6C5CE7;
-      --shadow: 0 18px 40px rgba(0,0,0,.35);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 70% 20%, rgba(108,92,231,.20), transparent 60%),
-        radial-gradient(900px 600px at 20% 10%, rgba(79,124,255,.18), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height:100vh;
-    }
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 60px}
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 16px;border:1px solid var(--stroke);border-radius:999px;
-      background:rgba(255,255,255,.03);
-      backdrop-filter: blur(10px);
-    }
-    .chip{
-      padding:8px 12px;border-radius:999px;border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);color:var(--muted);font-size:13px;
-    }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-    .dot{width:10px;height:10px;border-radius:50%;
-      background:linear-gradient(135deg,var(--brand),var(--brand2));
-      box-shadow:0 0 0 4px rgba(79,124,255,.18)}
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-top:22px}
-    @media (max-width:900px){.hero{grid-template-columns:1fr}}
-    .panel{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.03);
-      border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
-    h1{margin:0 0 8px;font-size:34px;font-weight:900}
-    .sub{margin:0 0 18px;color:var(--muted);line-height:1.8}
-    .ctaRow{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      border:none;cursor:pointer;padding:12px 16px;border-radius:12px;
-      font-weight:800;font-size:14px;text-decoration:none;display:inline-flex;
-      align-items:center;justify-content:center;min-width:140px}
-    .primary{
-      background:linear-gradient(135deg,var(--brand),var(--brand2));
-      color:#fff;box-shadow:0 12px 30px rgba(79,124,255,.25)}
-    .ghost{background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text)}
-    .miniNote{color:rgba(234,240,255,.65);font-size:12px;margin-top:10px}
-    .bullets{margin:0;padding:0 18px 0 0;color:var(--muted);line-height:1.9}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-    @media (max-width:900px){.grid3{grid-template-columns:1fr}}
-    .card{border:1px solid var(--stroke);background:rgba(255,255,255,.03);
-      border-radius:14px;padding:16px}
-    .footer{text-align:center;margin-top:22px;color:rgba(234,240,255,.55);font-size:12px}
-  </style>
+<style>
+:root{
+  --bg1:#071326; --bg2:#0B1A33;
+  --text:#EAF0FF; --muted:rgba(234,240,255,.7);
+  --brand:#4F7CFF; --brand2:#6C5CE7;
+  --stroke:rgba(255,255,255,.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:system-ui,Tahoma;
+  color:var(--text);
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+}
+.wrap{max-width:1100px;margin:auto;padding:30px}
+.top{display:flex;justify-content:space-between;align-items:center;
+  border:1px solid var(--stroke);padding:14px;border-radius:999px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:25px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.panel{border:1px solid var(--stroke);padding:24px;border-radius:16px}
+h1{margin:0 0 10px;font-size:34px}
+p{color:var(--muted);line-height:1.8}
+.btn{
+  padding:12px 18px;border-radius:12px;
+  border:none;cursor:pointer;font-weight:800
+}
+.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.ghost{background:transparent;border:1px solid var(--stroke);color:#fff}
+.cta{display:flex;gap:10px;margin-top:15px}
+
+/* Popup */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;
+  z-index:999;
+}
+.popup{
+  width:100%;max-width:520px;
+  background:#0B1A33;border-radius:16px;
+  padding:16px;position:relative;
+}
+.popup iframe{
+  width:100%;height:520px;border:none;border-radius:12px
+}
+.close{
+  position:absolute;top:10px;left:10px;
+  background:none;border:none;color:#fff;
+  font-size:20px;cursor:pointer
+}
+</style>
 </head>
 
 <body>
 <div class="wrap">
 
-  <div class="topbar">
-    <div class="chip">افهم الترند قبل ما يفوتك</div>
-    <div class="brand"><span class="dot"></span> Virlo</div>
+  <div class="top">
+    <div>افهم الترند قبل ما يفوتك</div>
+    <strong>Virlo</strong>
   </div>
 
   <div class="hero">
     <div class="panel">
       <h1>الترند ما ينتشر صدفة<br><span style="color:#76A7FF">Virlo يشرح لك ليش</span></h1>
-      <p class="sub">
-        Virlo يساعدك تفهم ليش الترند انتشر، ويعطيك أرقام واضحة عن المشاهدات،
-        التفاعل، والنمو — بدون تعقيد.
+      <p>
+        حلّل الترندات، افهم التفاعل والنمو،
+        وخذ قرارك بأرقام واضحة.
       </p>
 
-      <div class="ctaRow">
+      <div class="cta">
         <a class="btn primary" href="./dashboard.html">جرّب الديمو</a>
-        <button class="btn ghost" id="earlyAccessBtn">خلّي إيميلك</button>
+        <button class="btn ghost" onclick="openForm()">خلّي إيميلك</button>
       </div>
-
-      <div class="miniNote">* بدون سبام — تنبيه فقط عند فتح Early Access.</div>
     </div>
 
     <div class="panel">
-      <ul class="bullets">
+      <ul>
         <li>تحليل الترندات</li>
-        <li>قياس التفاعل والنمو</li>
         <li>شرح سبب الانتشار</li>
-        <li>اختيار المحتوى الصح بالوقت الصح</li>
+        <li>اختيار المحتوى الصح</li>
       </ul>
     </div>
   </div>
 
-  <div class="grid3">
-    <div class="card"><h3>لصنّاع المحتوى</h3><p>اعرف وش يشبك قبل لا تصوّر.</p></div>
-    <div class="card"><h3>للمسوّقين</h3><p>قرارات أسرع بأرقام واضحة.</p></div>
-    <div class="card"><h3>للعلامات التجارية</h3><p>ادخل الترند بذكاء.</p></div>
+</div>
+
+<!-- Popup Form -->
+<div class="overlay" id="formOverlay">
+  <div class="popup">
+    <button class="close" onclick="closeForm()">✕</button>
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLScdX1HTaay7qgCrker5-ejhYMTO2FRJtCGoxSuVcSXlGZAsLg/viewform?embedded=true">
+    </iframe>
   </div>
-
-  <div class="footer">Virlo — MVP تجريبي</div>
-
 </div>
 
 <script>
-  const FORM_URL =
-    "https://docs.google.com/forms/d/e/1FAIpQLScdX1HTaay7qgCrker5-ejhYMTO2FRJtCGoxSuVcSXlGZAsLg/viewform";
-
-  document.getElementById("earlyAccessBtn").addEventListener("click", () => {
-    window.open(FORM_URL, "_blank", "noopener,noreferrer");
-  });
+function openForm(){
+  document.getElementById("formOverlay").style.display="flex";
+}
+function closeForm(){
+  document.getElementById("formOverlay").style.display="none";
+}
 </script>
+
 </body>
 </html>
