@@ -312,33 +312,26 @@
     const v = email.value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
       email.focus();
-      email.setCustomValidity("اكتب ايميل صحيح");
-      email.reportValidity();
-      email.setCustomValidity("");
       return;
     }
 
     joinBtn.disabled = true;
     statusEl.classList.remove("show");
 
+    const formData = new FormData();
+    formData.append("email", v);
+
     try {
-      const res = await fetch(
+      await fetch(
         "https://script.google.com/macros/s/AKfycbxDHA4-n6wXtmbzK3ttqd7bus3w3Kw5tSeRj0Ow_AgyXuUlNTG5RetVwqUWQjGVY5Hj/exec",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: v })
+          body: formData
         }
       );
 
-      const data = await res.json();
-
-      if (data.ok) {
-        statusEl.classList.add("show");
-        email.value = "";
-      } else {
-        alert("صار خطأ، جرّب مرة ثانية");
-      }
+      statusEl.classList.add("show");
+      email.value = "";
 
     } catch (err) {
       alert("تعذر الاتصال بالسيرفر");
@@ -349,4 +342,5 @@
 </script>
 </body>
 </html>
+
 
