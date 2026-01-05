@@ -2,358 +2,351 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Virlo — افهم الترند قبل ما يفوتك</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virlo — Early Access</title>
+  <meta name="description" content="افهم الترند قبل ما يفوتك. سجّل إيميلك لتجربة Virlo قبل الإطلاق." />
   <style>
     :root{
-      --bg0:#050a14;
-      --bg1:#071126;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.03);
-      --stroke: rgba(255,255,255,.10);
-      --text:#eef4ff;
-      --muted: rgba(238,244,255,.70);
-      --muted2: rgba(238,244,255,.52);
-      --shadow: 0 30px 90px rgba(0,0,0,.55);
+      --bg:#07122b;
+      --bg2:#050b1a;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --brand:#4da3ff;
+      --brand2:#2d7dff;
+      --good:#22c55e;
+      --bad:#fb7185;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:24px;
+      --max:1100px;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:"Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 50% 120px, rgba(37,99,235,.28), transparent 55%),
-        radial-gradient(700px 380px at 75% 220px, rgba(34,211,238,.14), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+        radial-gradient(1200px 600px at 70% -10%, rgba(77,163,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 10% 10%, rgba(45,125,255,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       min-height:100vh;
     }
-
-    .wrap{
-      width:min(900px, 92vw);
-      margin:0 auto;
-      padding:26px 0 56px;
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      margin-top:8px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+      font-size:18px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 0 0 6px rgba(77,163,255,.15);
     }
 
-    /* ===== الكبسولة الزرقاء العليا ===== */
-    .hero-pill{
-      width: min(760px, 100%);
-      margin: 8px auto 22px;
-      padding: 18px 28px;
+    /* Capsule */
+    .capsule{
+      margin:26px auto 18px;
+      background: linear-gradient(135deg, rgba(77,163,255,.18), rgba(45,125,255,.10));
+      border:1px solid rgba(77,163,255,.35);
+      border-radius:999px;
+      padding:12px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      border-radius:999px;
-      background: linear-gradient(135deg, #2563eb, #38bdf8);
-      box-shadow: 0 22px 55px rgba(37,99,235,.35);
-      color:#fff;
+      gap:14px;
+      box-shadow:0 10px 40px rgba(0,0,0,.25);
+      max-width:880px;
     }
-    .pill-text{font-size:24px;font-weight:900}
-    .pill-brand{font-size:30px;font-weight:900;opacity:.95}
-
-    /* ===== الكرت الرئيسي ===== */
-    .hero{
-      width:min(760px, 100%);
-      margin:0 auto;
-      border-radius:26px;
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, var(--panel), var(--panel2));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      padding: 30px 22px 22px;
-    }
-
-    h1{
-      margin: 6px 0 14px;
-      text-align:center;
-      font-size: clamp(30px, 5vw, 46px);
-      font-weight: 900;
-      line-height:1.15;
-      text-shadow: 0 14px 50px rgba(0,0,0,.55);
-    }
-    .accent{color:#7fb4ff}
-
-    .sub{
-      margin: 0 auto 22px;
-      text-align:center;
-      width:min(620px, 100%);
-      color: var(--muted);
-      line-height:1.85;
-      font-size: 16px;
-    }
-
-    /* ===== فورم الايميل ===== */
-    .form{
-      width:min(620px, 100%);
-      margin: 0 auto 18px;
-      text-align:center;
-    }
-    .form .label{
-      color: var(--muted2);
+    .capsule .left{
+      display:flex; align-items:center; gap:10px;
       font-weight:800;
-      margin-bottom: 12px;
-      font-size: 18px;
+      white-space:nowrap;
+    }
+    .capsule .right{
+      color:var(--muted);
+      font-weight:650;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
-    .email-box{
-      width:100%;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(4,10,22,.55);
-      padding: 16px 18px;
-      color: var(--text);
-      font-size: 18px;
-      outline:none;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-    }
-    .email-box::placeholder{color: rgba(238,244,255,.45)}
-    .email-box:focus{
-      border-color: rgba(59,130,246,.55);
-      box-shadow: 0 0 0 4px rgba(59,130,246,.16);
-    }
-
-    .join-btn{
-      width:100%;
-      margin-top: 12px;
-      padding: 16px 18px;
-      border:none;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: 18px;
-      cursor:pointer;
-      color:#071022;
-      background: linear-gradient(180deg, #93c5fd, #3b82f6);
-      box-shadow: 0 18px 55px rgba(59,130,246,.28);
-      transition: transform .08s ease, filter .2s ease;
-    }
-    .join-btn:active{transform: translateY(1px) scale(.99)}
-    .join-btn:hover{filter: brightness(1.03)}
-    .join-btn:disabled{opacity:.7; cursor:not-allowed}
-
-    .status{
-      margin-top: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      color: rgba(167,255,202,.95);
-      font-weight:900;
-      opacity:0;
-      transform: translateY(-4px);
-      transition: .25s ease;
-      min-height:22px;
-    }
-    .status.show{opacity:1; transform: translateY(0)}
-    .tick{
-      width:18px;height:18px;border-radius:6px;
-      background: rgba(34,197,94,.16);
-      border: 1px solid rgba(34,197,94,.45);
-      display:grid;place-items:center;
-      font-size:13px;
-    }
-
-    /* ===== الكروت الثلاثة ===== */
-    .cards{
-      width:min(700px, 100%);
-      margin: 18px auto 0;
-      display:grid;
-      gap: 18px;
-    }
-
-    .card{
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      padding: 22px 18px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.28);
+    .hero{
       text-align:center;
+      margin:22px auto 0;
+      max-width:900px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:46px;
+      line-height:1.15;
+      letter-spacing:-.4px;
+    }
+    .hero p{
+      margin:14px auto 0;
+      font-size:18px;
+      color:var(--muted);
+      max-width:720px;
+      line-height:1.8;
     }
 
+    .cta{
+      margin:22px auto 0;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 16px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:800;
+      transition:.15s transform, .15s background, .15s border;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn.primary{
+      border-color: rgba(77,163,255,.45);
+      background: linear-gradient(135deg, rgba(77,163,255,.22), rgba(45,125,255,.16));
+    }
+    .btn.primary:hover{border-color: rgba(77,163,255,.65)}
+    .btn:disabled{opacity:.65; cursor:wait; transform:none}
+
+    .form{
+      margin:16px auto 0;
+      max-width:680px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius2);
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .formRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .input{
+      flex:1 1 320px;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-size:16px;
+    }
+    .input::placeholder{color:rgba(234,240,255,.45)}
+    .status{
+      margin-top:10px;
+      font-size:14px;
+      color:var(--muted);
+      opacity:0;
+      transition:.2s opacity;
+    }
+    .status.show{opacity:1}
+    .status.ok{color:rgba(34,197,94,.95)}
+    .status.bad{color:rgba(251,113,133,.95)}
+
+    .grid{
+      margin:26px auto 0;
+      max-width:980px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 4;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:0 12px 40px rgba(0,0,0,.25);
+      min-height:120px;
+    }
     .card h3{
-      margin: 0 0 10px;
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: .2px;
+      margin:0 0 8px;
+      font-size:16px;
+      letter-spacing:-.2px;
     }
     .card p{
-      margin: 0;
-      color: rgba(238,244,255,.70);
-      line-height: 1.85;
-      font-size: 18px;
-      font-weight: 700;
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
     }
 
-    /* ===== قسم وش يسوي Virlo؟ ===== */
-    .what{
-      width:min(700px, 100%);
-      margin: 18px auto 0;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      padding: 22px 18px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.28);
-      text-align:center;
+    .section{
+      margin:34px auto 0;
+      max-width:980px;
+      background:var(--card2);
+      border:1px solid var(--border);
+      border-radius:var(--radius2);
+      padding:18px;
     }
-    .what h3{
-      margin: 0 0 14px;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: .2px;
+    .section h2{
+      margin:0 0 8px;
+      font-size:18px;
     }
-    .what ul{
-      list-style: disc;
-      margin: 0;
-      padding: 0 22px 0 0;
-      text-align:right;
-      color: rgba(238,244,255,.75);
-      font-weight: 800;
-      line-height: 2.0;
-      font-size: 18px;
+    .bullets{
+      margin:10px 0 0;
+      padding:0 18px;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14px;
     }
 
     .footer{
-      width:min(700px, 100%);
-      margin: 16px auto 0;
-      text-align:center;
-      color: rgba(238,244,255,.45);
-      font-weight: 900;
-      font-size: 16px;
-      padding: 8px 0 0;
+      margin:34px auto 0;
+      max-width:980px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:rgba(234,240,255,.55);
+      font-size:13px;
     }
 
-    @media(max-width:600px){
-      .pill-text{font-size:20px}
-      .pill-brand{font-size:26px}
-      .card h3{font-size:28px}
-      .card p{font-size:17px}
-      .what h3{font-size:24px}
-      .what ul{font-size:17px}
+    @media (max-width: 900px){
+      .hero h1{font-size:36px}
+      .card{grid-column: span 12}
+      .capsule{max-width:100%}
+      .capsule .right{white-space:normal}
     }
   </style>
 </head>
-
 <body>
-  <main class="wrap">
-
-    <div class="hero-pill">
-      <span class="pill-text">افهم الترند قبل ما يفوتك</span>
-      <span class="pill-brand">Virlo</span>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo"><span class="dot"></span> Virlo</div>
+      <a class="btn" href="demo.html" aria-label="جرّب الديمو">جرّب الديمو</a>
     </div>
 
-    <section class="hero">
-      <h1>
-        الترند ما ينتشر<br>
-        صدفة<br>
-        <span class="accent">Virlo</span> يشرح لك<br>
-        ليش
-      </h1>
+    <!-- Capsule طويلة: يمين Virlo ويسار/الطرف الثاني افهم الترند... -->
+    <div class="capsule" role="note" aria-label="Virlo capsule">
+      <div class="left">Virlo</div>
+      <div class="right">افهم الترند قبل ما يفوتك</div>
+    </div>
 
-      <p class="sub">
-        Virlo يساعد صُنّاع المحتوى والمسوقين يفهمون ليش هذا الترند انتشر
-        ويعطيك مؤشرات واضحة مثل النمو والتفاعل بدون تعقيد.
+    <div class="hero">
+      <h1>Virlo — Early Access</h1>
+      <p>
+        سجّل إيميلك لتجربة Virlo قبل الإطلاق.  
+        هدفنا: نخليك تعرف “وش يركب الترند” قبل ما يصير قديم.
       </p>
 
-      <form class="form" id="earlyAccessForm">
-        <div class="label">اكتب ايميلك للتجربة</div>
-        <input class="email-box" id="email" type="email" placeholder="اكتب ايميلك" required />
-        <button class="join-btn" id="joinBtn" type="submit">انضم</button>
-
-        <div class="status" id="status">
-          <span class="tick">✓</span>
-          <span>تم الإرسال</span>
-        </div>
-      </form>
-
-      <div class="cards">
-        <div class="card">
-          <h3>لصنّاع المحتوى</h3>
-          <p>اعرف وش تتصور قبل لا تضيع وقتك على فكرة ما تنتشر.</p>
-        </div>
-
-        <div class="card">
-          <h3>للمسوّقين</h3>
-          <p>اختصر وقت التحليل وركز على الفرص الحقيقية.</p>
-        </div>
-
-        <div class="card">
-          <h3>للعلامات التجارية</h3>
-          <p>ادخل الترند بذكاء بدل التقليد الأعمى.</p>
-        </div>
+      <div class="cta">
+        <a class="btn" href="#waitlist">انضم للقائمة</a>
+        <a class="btn primary" href="demo.html">جرّب الديمو الآن</a>
       </div>
 
-      <!-- القسم المضاف -->
-      <div class="what">
-        <h3>وش يسوي Virlo؟</h3>
-        <ul>
-          <li>يحلل الترندات المنتشرة</li>
-          <li>يقيس التفاعل والنمو</li>
-          <li>يشرح أسباب الانتشار</li>
-          <li>يساعدك تختار المحتوى الصح بالوقت الصح</li>
-        </ul>
+      <div class="form" id="waitlist">
+        <div class="formRow">
+          <input id="email" class="input" type="email" placeholder="اكتب إيميلك هنا…" autocomplete="email" />
+          <button id="joinBtn" class="btn primary" type="button">انضم</button>
+        </div>
+        <div id="status" class="status"> </div>
       </div>
+    </div>
 
-      <div class="footer">© تجريبي Virlo — MVP</div>
-    </section>
-  </main>
-<script>
-  const WEB_APP_URL =
-    "https://script.google.com/macros/s/AKfycbyspyjOCoZneLsFSvvbjquMEhQaXS05S5NLMR2hdcH_Q0-t_RMjs0aQIyPRDpkSk5x3/exec";
+    <div class="grid" aria-label="فئات المستخدمين">
+      <div class="card">
+        <h3>صنّاع محتوى</h3>
+        <p>اعرف المواضيع اللي قاعد تطلع الآن، وأفضل زاوية محتوى عليها.</p>
+      </div>
+      <div class="card">
+        <h3>مسوّقين</h3>
+        <p>راقب إشارات الترند بدري، وحوّلها لحملة قبل المنافسين.</p>
+      </div>
+      <div class="card">
+        <h3>علامات تجارية</h3>
+        <p>اعرف كيف تدخل الترند بدون ما تطلع “متأخر” أو “ثقيل”.</p>
+      </div>
+    </div>
 
-  const emailInput = document.getElementById("email");
-  const joinBtn = document.getElementById("joinBtn");
-  const statusEl = document.getElementById("status");
+    <div class="section">
+      <h2>وش يسوي Virlo؟</h2>
+      <ul class="bullets">
+        <li>يجمع إشارات الترند من المنصّات (ومستقبلًا: حسب السوق السعودي).</li>
+        <li>يعطيك “فكرة تنفيذ” + “قالب محتوى” + “لمسة إبداعية” مرتبطة بالترند.</li>
+        <li>يركّز على القابلية للتطبيق — مو بس أرقام.</li>
+      </ul>
+    </div>
 
-  function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
+    <div class="section">
+      <h2>وش اللي يصير بعد التسجيل؟</h2>
+      <ul class="bullets">
+        <li>إيميلك ينحفظ في قائمة الوصول المبكر.</li>
+        <li>أول ما تفتح النسخة التجريبية نرسل لك دعوة.</li>
+        <li>تقدر من الآن تجرب “الديمو المقنع” وتشوف شكل التجربة.</li>
+      </ul>
+    </div>
 
-  function showStatus(msg, ok = true) {
-    statusEl.textContent = msg;
-    statusEl.classList.add("show");
-    statusEl.style.opacity = "1";
-    // اختياري: يخفي الرسالة بعد 4 ثواني
-    setTimeout(() => (statusEl.style.opacity = "0"), 4000);
-  }
+    <div class="footer">
+      <div>© <span id="year"></span> Virlo</div>
+      <div>
+        <a href="terms.html">الشروط</a> • <a href="privacy.html">الخصوصية</a>
+      </div>
+    </div>
+  </div>
 
-  async function submitEmail() {
-    const email = (emailInput.value || "").trim().toLowerCase();
+  <script>
+    // ✅ رابط Web App حقك
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyspyjOCoZneLsFSvvbjquMEhQaXS05S5NLMR2hdcH_Q0-t_RMjs0aQIyPRDpkSk5x3/exec";
 
-    if (!email) return showStatus("اكتب الإيميل أول 🙏", false);
-    if (!isValidEmail(email)) return showStatus("الإيميل غير صحيح 😅", false);
+    const emailInput = document.getElementById("email");
+    const joinBtn = document.getElementById("joinBtn");
+    const statusEl = document.getElementById("status");
 
-    joinBtn.disabled = true;
-    joinBtn.classList.add("loading");
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    try {
-      // ✅ إرسال مضمون بدون مشاكل CORS
-      const url = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&t=${Date.now()}`;
-      await fetch(url, { method: "GET" });
-
-      showStatus("✅ تم التسجيل! بنعلّمك أول ما نفتح التجربة.");
-      emailInput.value = "";
-    } catch (e) {
-      showStatus("⚠️ حصل خطأ… جرّب مرة ثانية", false);
-    } finally {
-      joinBtn.disabled = false;
-      joinBtn.classList.remove("loading");
+    function isValidEmail(email){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
-  }
 
-  joinBtn.addEventListener("click", submitEmail);
+    function showStatus(msg, ok=true){
+      statusEl.textContent = msg;
+      statusEl.classList.add("show");
+      statusEl.classList.toggle("ok", ok);
+      statusEl.classList.toggle("bad", !ok);
+    }
 
-  emailInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") submitEmail();
-  });
-</script>
+    async function submitEmail(){
+      const email = (emailInput.value || "").trim().toLowerCase();
+
+      if(!email) return showStatus("اكتب الإيميل أول 🙏", false);
+      if(!isValidEmail(email)) return showStatus("الإيميل غير صحيح 😅", false);
+
+      joinBtn.disabled = true;
+      joinBtn.textContent = "جارٍ التسجيل…";
+
+      try{
+        // ✅ إرسال مضمون (GET) بدون صداع CORS
+        const url = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&t=${Date.now()}`;
+        await fetch(url, { method: "GET" });
+
+        showStatus("✅ تم التسجيل! بنعلّمك أول ما نفتح التجربة.", true);
+        emailInput.value = "";
+      }catch(e){
+        showStatus("⚠️ حصل خطأ… جرّب مرة ثانية", false);
+      }finally{
+        joinBtn.disabled = false;
+        joinBtn.textContent = "انضم";
+      }
+    }
+
+    joinBtn.addEventListener("click", submitEmail);
+    emailInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") submitEmail(); });
+  </script>
 </body>
 </html>
-
-
-
-
-
