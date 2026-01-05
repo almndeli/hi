@@ -301,49 +301,58 @@
     </section>
   </main>
 <script>
-  const form = document.getElementById("earlyAccessForm");
-  const email = document.getElementById("email");
-  const statusEl = document.getElementById("status");
+  const WEB_APP_URL =
+    "https://script.google.com/macros/s/AKfycbyspyjOCoZneLsFSvvbjquMEhQaXS05S5NLMR2hdcH_Q0-t_RMjs0aQIyPRDpkSk5x3/exec";
+
+  const emailInput = document.getElementById("email");
   const joinBtn = document.getElementById("joinBtn");
+  const statusEl = document.getElementById("status");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
-    const v = email.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-      email.focus();
-      return;
-    }
+  function showStatus(msg, ok = true) {
+    statusEl.textContent = msg;
+    statusEl.classList.add("show");
+    statusEl.style.opacity = "1";
+    // اختياري: يخفي الرسالة بعد 4 ثواني
+    setTimeout(() => (statusEl.style.opacity = "0"), 4000);
+  }
+
+  async function submitEmail() {
+    const email = (emailInput.value || "").trim().toLowerCase();
+
+    if (!email) return showStatus("اكتب الإيميل أول 🙏", false);
+    if (!isValidEmail(email)) return showStatus("الإيميل غير صحيح 😅", false);
 
     joinBtn.disabled = true;
-    statusEl.classList.remove("show");
+    joinBtn.classList.add("loading");
 
-    const formData = new FormData();
-    formData.append("email", v);
+    try {
+      // ✅ إرسال مضمون بدون مشاكل CORS
+      const url = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&t=${Date.now()}`;
+      await fetch(url, { method: "GET" });
 
-try {
-  await fetch(
-    "https://script.google.com/macros/s/AKfycbyspyjOCoZneLsFSvvbjquMEhQaXS05S5NLMR2hdcH_Q0-t_RMjs0aQIyPRDpkSk5x3/exec",
-    {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
+      showStatus("✅ تم التسجيل! بنعلّمك أول ما نفتح التجربة.");
+      emailInput.value = "";
+    } catch (e) {
+      showStatus("⚠️ حصل خطأ… جرّب مرة ثانية", false);
+    } finally {
+      joinBtn.disabled = false;
+      joinBtn.classList.remove("loading");
     }
-  );
+  }
 
-  statusEl.classList.add("show");
-  email.value = "";
+  joinBtn.addEventListener("click", submitEmail);
 
-} catch (err) {
-  alert("تعذر الاتصال بالسيرفر");
-}
-
-
-    joinBtn.disabled = false;
+  emailInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submitEmail();
   });
 </script>
 </body>
 </html>
+
 
 
 
